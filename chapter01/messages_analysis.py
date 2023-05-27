@@ -11,26 +11,26 @@ import pymc3 as pm
 
 
 def load_dataset(filepath: str):
-    '''
+    """
     データを読み込む
-    '''
+    """
     data = pd.read_csv(filepath)
     return data.values.T[0]
 
 
 def savefig(fig, save_path_string: str):
-    '''
+    """
     figure を保存する
-    '''
+    """
     save_path = Path(save_path_string)
     os.makedirs(save_path.parent, exist_ok=True)
     fig.savefig(save_path)
 
 
-def plot_observed( data):
-    '''
+def plot_observed(data):
+    """
     観測値をプロットする
-    '''
+    """
     data_length = len(data)
     fig, ax = plt.subplots(1, 1, figsize=(8, 6))
     ax.bar(np.arange(data_length), data, color="#348ABD")
@@ -43,9 +43,9 @@ def plot_observed( data):
 
 
 def modeling(observed, samples=40000, sample_tune=10000):
-    '''
+    """
     モデリングとサンプリングを実行する
-    '''
+    """
     logger = logging.getLogger(__name__)
 
     alpha = 1.0 / observed.mean()
@@ -65,17 +65,25 @@ def modeling(observed, samples=40000, sample_tune=10000):
 
 
 def plot_trace(trace, data_length):
-    '''
+    """
     trace をプロットする
-    ToDo: 図の正規化
-
-    '''
+    """
     fig, axes = plt.subplots(3, 1)
     axes = axes.flatten()
-    axes[0].hist(trace["lambda_1"], bins=30, alpha=0.8, label="lambda_1")
+
+    # plot lambda_1
+    axes[0].hist(
+        trace["lambda_1"], bins=30, alpha=0.8, label="lambda_1", density=True
+    )
     axes[0].set_xlim([15, 30])
-    axes[1].hist(trace["lambda_2"], bins=30, alpha=0.8, label="lambda_2", density=True)
+
+    # plot lambda_2
+    axes[1].hist(
+        trace["lambda_2"], bins=30, alpha=0.8, label="lambda_2", density=True
+    )
     axes[1].set_xlim([15, 30])
+
+    # plot tau
     w = 1.0 / trace["tau"].shape[0] * np.ones_like(trace["tau"])
     axes[2].hist(
         trace["tau"],
@@ -85,7 +93,9 @@ def plot_trace(trace, data_length):
         weights=w,
         rwidth=2.0,
     )
-    axes[1].set_xlim([15, 30])
+    for ax in axes:
+        ax.legend()
+        ax.grid()
     return fig
 
 
@@ -94,9 +104,9 @@ def plot_trace(trace, data_length):
 @click.option("--samples", type=int, default=40000)
 @click.option("--sample_tune", type=int, default=10000)
 def main(**kwargs):
-    '''
+    """
     メイン処理
-    '''
+    """
     logger = logging.getLogger(__name__)
 
     # load data
