@@ -28,8 +28,8 @@ stages:
       data/interim/model.pickle reports/figures/chapter01/ data/processed/trace_summary.csv
     deps:
     - path: chapter01/analysis.py
-      md5: 982cb3b761215f66d800bba18dfa04e7
-      size: 5232
+      md5: e2782b3701efa30f936bb566048090e1
+      size: 5233
     - path: data/interim/model.pickle
       md5: 44cbff7f0e4d5d9b54f5404ced506b21
       size: 767672
@@ -44,6 +44,6 @@ stages:
       md5: 550ddfef45c5ee0e1bf045f8fba4ac30
       size: 261
     - path: reports/figures/chapter01/
-      md5: 387eef96085c26c6dca7d568d4436751.dir
-      size: 208551
+      md5: d4400b0b7b6e8eb0c84a60063c4b92a9.dir
+      size: 212315
       nfiles: 4
