@@ -42,7 +42,7 @@ def plot_observed(data):
     return fig
 
 
-def modeling(observed, samples=40000, sample_tune=10000):
+def modeling(observed, samples=40000, sample_tune=10000, chains=3):
     """
     モデリングとサンプリングを実行する
     """
@@ -59,43 +59,80 @@ def modeling(observed, samples=40000, sample_tune=10000):
             "observation", lambda_, observed=observed
         )
         logger.info("start sampling")
-        trace = pm.sample(samples, tune=sample_tune)
+        trace = pm.sample(samples, tune=sample_tune, chains=chains)
         logger.info("end sampling")
     return trace
 
 
-def plot_trace(trace, data_length):
+def plot_trace(trace, data):
     """
     trace をプロットする
     """
-    fig, axes = plt.subplots(3, 1)
+
+    # calc length
+    data_length = len(data)
+
+    # 日別の期待値を計算
+    expected_messages_per_day = np.zeros(data_length)
+    for day in range(data_length):
+        ix = day < trace["tau"]
+        expected_messages_per_day[day] = (
+            trace["lambda_1"][ix].sum() + trace["lambda_2"][~ix].sum()
+        ) / len(trace["tau"])
+
+    # チャートを初期化
+    fig, axes = plt.subplots(4, 1, figsize=(8, 6))
     axes = axes.flatten()
 
     # plot lambda_1
     axes[0].hist(
-        trace["lambda_1"], bins=30, alpha=0.8, label="lambda_1", density=True
+        trace["lambda_1"],
+        bins=30,
+        alpha=0.8,
+        label=r"$\lambda_1$",
+        density=True,
     )
     axes[0].set_xlim([15, 30])
+    axes[0].set_title(r"$\lambda_1$ の事後分布")
 
     # plot lambda_2
     axes[1].hist(
-        trace["lambda_2"], bins=30, alpha=0.8, label="lambda_2", density=True
+        trace["lambda_2"],
+        bins=30,
+        alpha=0.8,
+        label=r"$\lambda_2$",
+        density=True,
     )
     axes[1].set_xlim([15, 30])
+    axes[1].set_title(r"$\lambda_2$ の事後分布")
 
     # plot tau
-    w = 1.0 / trace["tau"].shape[0] * np.ones_like(trace["tau"])
     axes[2].hist(
         trace["tau"],
         bins=data_length,
         alpha=0.8,
-        label="tau",
-        weights=w,
+        label=r"$\tau$",
+        weights=1.0 / trace["tau"].shape[0] * np.ones_like(trace["tau"]),
         rwidth=2.0,
     )
+    axes[2].set_title(r"$\tau$ の事後分布")
+
+    # plot tau estimated mean
+    axes[3].bar(np.arange(data_length), data, label="生データ")
+    axes[3].plot(
+        range(data_length),
+        expected_messages_per_day,
+        label="受信メッセージ数の期待値",
+        color="orange",
+    )
+    axes[3].set_title("受信メッセージ数の期待値")
+
+    # add chart parts
     for ax in axes:
         ax.legend()
         ax.grid()
+
+    fig.tight_layout()
     return fig
 
 
@@ -103,6 +140,7 @@ def plot_trace(trace, data_length):
 @click.argument("input_filepath", type=click.Path(exists=True))
 @click.option("--samples", type=int, default=40000)
 @click.option("--sample_tune", type=int, default=10000)
+@click.option("--chains", type=int, default=3)
 def main(**kwargs):
     """
     メイン処理
@@ -117,14 +155,20 @@ def main(**kwargs):
     savefig(plot_observed(data), "reports/figures/observed.png")
 
     # modeling and sampling
-    trace = modeling(data)
+    trace = modeling(
+        data,
+        samples=kwargs["samples"],
+        sample_tune=kwargs["sample_tune"],
+        chains=kwargs["chains"],
+    )
+    logger.info(dir(trace))
 
     logger.info(f'trace lambda_1.shape: {trace["lambda_1"].shape}')
     logger.info(f'trace lambda_2.shape: {trace["lambda_2"].shape}')
     logger.info(f'trace tau.shape: {trace["tau"].shape}')
 
     # plot trace
-    savefig(plot_trace(trace, len(data)), "reports/figures/trace.png")
+    savefig(plot_trace(trace, data), "reports/figures/trace.png")
 
 
 if __name__ == "__main__":
