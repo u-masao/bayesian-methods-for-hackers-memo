@@ -27,6 +27,9 @@ stages:
     cmd: poetry run python -m chapter01.analysis data/raw/dataset.csv data/interim/trace.pickle
       data/interim/model.pickle reports/figures/chapter01/
     deps:
+    - path: chapter01/analysis.py
+      md5: 57f9c6aea3f39db9e6e781c482028645
+      size: 4643
     - path: data/interim/model.pickle
       md5: 9d56601cb1b07af83328d3025939a47e
       size: 767671
@@ -38,6 +41,6 @@ stages:
       size: 1850
     outs:
     - path: reports/figures/chapter01/
-      md5: a6de7e920591fbe82a8c7e938bbf9d71.dir
-      size: 98260
+      md5: 91a1ca5bd9f10f52d0f01f0b7339b988.dir
+      size: 95720
       nfiles: 3
