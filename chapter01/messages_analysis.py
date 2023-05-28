@@ -136,6 +136,27 @@ def plot_trace(trace, data):
     return fig
 
 
+def plot_effects(trace, data):
+    """
+    増加量に対して発生確率をプロット
+    """
+    effects = (
+        np.linspace(trace["lambda_1"].min(), trace["lambda_2"].max(), 1000)
+        - trace["lambda_1"].mean()
+    )
+    proba = []
+    for effect in effects:
+        proba.append((trace["lambda_1"] + effect < trace["lambda_2"]).mean())
+    fig, ax = plt.subplots(1, 1, figsize=(8, 6))
+    ax.plot(effects, proba, label=r"$\lambda_1$ よりも $\lambda_2$ の強度が強い確率")
+    ax.set_xlabel("強度の効果量")
+    ax.set_ylabel("確率")
+    ax.legend()
+    ax.grid()
+    fig.suptitle("強度の変化が推定される確率")
+    return fig
+
+
 @click.command()
 @click.argument("input_filepath", type=click.Path(exists=True))
 @click.option("--samples", type=int, default=40000)
@@ -161,7 +182,6 @@ def main(**kwargs):
         sample_tune=kwargs["sample_tune"],
         chains=kwargs["chains"],
     )
-    logger.info(dir(trace))
 
     logger.info(f'trace lambda_1.shape: {trace["lambda_1"].shape}')
     logger.info(f'trace lambda_2.shape: {trace["lambda_2"].shape}')
@@ -169,6 +189,9 @@ def main(**kwargs):
 
     # plot trace
     savefig(plot_trace(trace, data), "reports/figures/trace.png")
+
+    # test effects
+    savefig(plot_effects(trace, data), "reports/figures/effects.png")
 
 
 if __name__ == "__main__":
