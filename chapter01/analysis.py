@@ -141,6 +141,7 @@ def plot_effects(trace, data):
 @click.argument("input_trace_filepath", type=click.Path(exists=True))
 @click.argument("input_model_filepath", type=click.Path(exists=True))
 @click.argument("output_figure_dir", type=click.Path())
+@click.argument("output_summary_filepath", type=click.Path())
 def main(**kwargs):
     """
     メイン処理
@@ -169,6 +170,12 @@ def main(**kwargs):
 
     # test effects
     savefig(plot_effects(trace, data), output_figure_dir / "effects.png")
+
+    # trace summary
+    with model:
+        summary_df = pm.summary(trace)
+        summary_df.to_csv(kwargs["output_summary_filepath"])
+        logger.info(f"trace summary: \n{summary_df}")
 
 
 if __name__ == "__main__":
