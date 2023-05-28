@@ -43,8 +43,6 @@ def plot_observed(data):
     return fig
 
 
-
-
 def plot_trace(trace, data):
     """
     trace をプロットする
@@ -142,6 +140,7 @@ def plot_effects(trace, data):
 @click.argument("input_data_filepath", type=click.Path(exists=True))
 @click.argument("input_trace_filepath", type=click.Path(exists=True))
 @click.argument("input_model_filepath", type=click.Path(exists=True))
+@click.argument("output_figure_dir", type=click.Path())
 def main(**kwargs):
     """
     メイン処理
@@ -159,16 +158,18 @@ def main(**kwargs):
     trace = pickle.load(open(kwargs["input_trace_filepath"], "rb"))
     model = pickle.load(open(kwargs["input_model_filepath"], "rb"))
     with model:
-        pm.traceplot(trace)
+        pm.plot_trace(trace)
 
     # plot data
-    savefig(plot_observed(data), "reports/figures/observed.png")
+    savefig(plot_observed(data), kwargs["output_figure_dir"] / "observed.png")
 
     # plot trace
-    savefig(plot_trace(trace, data), "reports/figures/trace.png")
+    savefig(plot_trace(trace, data), kwargs["output_figure_dir"] / "trace.png")
 
     # test effects
-    savefig(plot_effects(trace, data), "reports/figures/effects.png")
+    savefig(
+        plot_effects(trace, data), kwargs["output_figure_dir"] / "effects.png"
+    )
 
 
 if __name__ == "__main__":

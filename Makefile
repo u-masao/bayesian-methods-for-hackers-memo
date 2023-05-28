@@ -7,7 +7,7 @@ repro: check_commit
 	git commit dvc.lock PIPELINE.md -m '[update] dvc repro'
 
 ## check commit
-check_commit:
+check_commit: lint
 	git status
 	git diff --exit-code --staged
 	git diff --exit-code
