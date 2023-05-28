@@ -127,12 +127,12 @@ def plot_effects(trace, data):
     for effect in effects:
         proba.append((trace["lambda_1"] + effect < trace["lambda_2"]).mean())
     fig, ax = plt.subplots(1, 1, figsize=(8, 6))
-    ax.plot(effects, proba, label=r"$\lambda_1$ よりも $\lambda_2$ の強度が強い確率")
-    ax.set_xlabel("強度の効果量")
+    ax.plot(effects, proba, label=r"$P( \lambda_1 + effect < \lambda_2 ) $")
+    ax.set_xlabel("変化量")
     ax.set_ylabel("確率")
     ax.legend()
     ax.grid()
-    fig.suptitle("強度の変化が推定される確率")
+    fig.suptitle("強度の期待値の変化量と発生確率")
     return fig
 
 
