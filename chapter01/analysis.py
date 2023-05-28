@@ -178,7 +178,7 @@ def main(**kwargs):
         logger.info(f"trace summary: \n{summary_df}")
         axes = pm.plot_trace(trace)
         fig = axes.ravel()[0].figure
-        for ax in axes:
+        for ax in axes.flatten():
             ax.grid()
             ax.legend()
         fig.tight_layout()
