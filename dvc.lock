@@ -1,0 +1,25 @@
+schema: '2.0'
+stages:
+  download_data:
+    cmd: wget https://git.io/vXTVC -O data/raw/dataset.csv
+    outs:
+    - path: data/raw/dataset.csv
+      md5: 1a53f0e394e74914659007cc5f153b9f
+      size: 1850
+  sampling:
+    cmd: poetry run python -m chapter01.sampling data/raw/dataset.csv data/interim/trace.pickle
+      data/interim/model.pickle --samples=40000 --sample_tune=10000
+    deps:
+    - path: chapter01/sampling.py
+      md5: 8a6c4c946b259a472d6163f984bc639c
+      size: 5474
+    - path: data/raw/dataset.csv
+      md5: 1a53f0e394e74914659007cc5f153b9f
+      size: 1850
+    outs:
+    - path: data/interim/model.pickle
+      md5: 87b60456b1f45ba64446b6fc95f0a9bc
+      size: 767671
+    - path: data/interim/trace.pickle
+      md5: 67fd7654420e7ece51ecab10a5fef4f1
+      size: 19514844
