@@ -11,8 +11,8 @@ stages:
       data/raw/dataset.csv
       data/interim/trace.pickle
       data/interim/model.pickle
-      --samples=40000
-      --sample_tune=10000
+      --samples=4000
+      --sample_tune=1000
     deps:
     - chapter01/sampling.py
     - data/raw/dataset.csv
