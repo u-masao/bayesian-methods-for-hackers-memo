@@ -171,6 +171,7 @@ def main(**kwargs):
             ax.grid()
         fig = axes.ravel()[0].figure
         fig.tight_layout()
+        fig.suptitle("trace plot")
         savefig(fig, output_figure_dir / "traceplot.png")
 
     # trace summary
