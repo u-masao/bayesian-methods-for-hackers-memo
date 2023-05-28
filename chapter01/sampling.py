@@ -22,7 +22,8 @@ def modeling(observed, samples=40000, sample_tune=10000, chains=3):
     logger = logging.getLogger(__name__)
 
     alpha = 1.0 / observed.mean()
-    with pm.Model() as model:  # noqa: F841
+    model = pm.Model()
+    with model:
         lambda_1 = pm.Exponential("lambda_1", alpha)
         lambda_2 = pm.Exponential("lambda_2", alpha)
         tau = pm.DiscreteUniform("tau", lower=0, upper=len(observed))
@@ -34,8 +35,7 @@ def modeling(observed, samples=40000, sample_tune=10000, chains=3):
         logger.info("start sampling")
         trace = pm.sample(samples, tune=sample_tune, chains=chains)
         logger.info("end sampling")
-        fig = pm.plot_trace(trace)
-    return trace, model, fig
+    return trace, model
 
 
 @click.command()
@@ -60,13 +60,12 @@ def main(**kwargs):
     logger.info(f"data: {data}")
 
     # modeling and sampling
-    trace, model, fig = modeling(
+    trace, model = modeling(
         data,
         samples=kwargs["samples"],
         sample_tune=kwargs["sample_tune"],
         chains=kwargs["chains"],
     )
-    fig.savefig("reports/figures/traceplot.png")
 
     # save trace and model
     with open(kwargs["output_trace_filepath"], "wb") as fo:
