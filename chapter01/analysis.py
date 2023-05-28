@@ -176,6 +176,8 @@ def main(**kwargs):
         summary_df = pm.summary(trace)
         summary_df.to_csv(kwargs["output_summary_filepath"])
         logger.info(f"trace summary: \n{summary_df}")
+        axes = pm.plot_trace(trace)
+        axes.ravel()[0].figure.savefig(output_figure_dir / "traceplot.png")
 
 
 if __name__ == "__main__":
