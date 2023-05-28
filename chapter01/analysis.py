@@ -172,7 +172,7 @@ def main(**kwargs):
             ax.grid()
             ax.legend()
         fig.tight_layout()
-        fig.savefig(output_figure_dir / "traceplot.png")
+        savefig(fig, output_figure_dir / "traceplot.png")
 
     # trace summary
     with model:
