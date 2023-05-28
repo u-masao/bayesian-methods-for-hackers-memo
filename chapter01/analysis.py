@@ -167,10 +167,9 @@ def main(**kwargs):
     # save trace plot
     with model:
         axes = pm.plot_trace(trace, compact=False, combined=False)
-        fig = axes.ravel()[0].figure
         for ax in axes.flatten():
             ax.grid()
-            ax.legend()
+        fig = axes.ravel()[0].figure
         fig.tight_layout()
         savefig(fig, output_figure_dir / "traceplot.png")
 
@@ -182,11 +181,7 @@ def main(**kwargs):
 
     # plot data
     savefig(plot_observed(data), output_figure_dir / "observed.png")
-
-    # plot trace
     savefig(plot_trace(trace, data), output_figure_dir / "posterior_dist.png")
-
-    # test effects
     savefig(plot_effects(trace, data), output_figure_dir / "effects.png")
 
 
