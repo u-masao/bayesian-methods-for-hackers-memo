@@ -27,6 +27,7 @@ stages:
       data/interim/model.pickle
       reports/figures/chapter01/
     deps:
+    - chapter01/analysis.py
     - data/raw/dataset.csv
     - data/interim/trace.pickle
     - data/interim/model.pickle
