@@ -34,7 +34,8 @@ def modeling(observed, samples=40000, sample_tune=10000, chains=3):
         logger.info("start sampling")
         trace = pm.sample(samples, tune=sample_tune, chains=chains)
         logger.info("end sampling")
-    return trace, model
+        fig = pm.plot_trace(trace)
+    return trace, model, fig
 
 
 @click.command()
@@ -59,12 +60,13 @@ def main(**kwargs):
     logger.info(f"data: {data}")
 
     # modeling and sampling
-    trace, model = modeling(
+    trace, model, fig = modeling(
         data,
         samples=kwargs["samples"],
         sample_tune=kwargs["sample_tune"],
         chains=kwargs["chains"],
     )
+    fig.savefig("reports/figures/traceplot.png")
 
     # save trace and model
     with open(kwargs["output_trace_filepath"], "wb") as fo:
