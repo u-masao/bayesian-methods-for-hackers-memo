@@ -161,15 +161,14 @@ def main(**kwargs):
         pm.plot_trace(trace)
 
     # plot data
-    savefig(plot_observed(data), kwargs["output_figure_dir"] / "observed.png")
+    output_figure_dir = Path(kwargs["output_figure_dir"])
+    savefig(plot_observed(data), output_figure_dir / "observed.png")
 
     # plot trace
-    savefig(plot_trace(trace, data), kwargs["output_figure_dir"] / "trace.png")
+    savefig(plot_trace(trace, data), output_figure_dir / "trace.png")
 
     # test effects
-    savefig(
-        plot_effects(trace, data), kwargs["output_figure_dir"] / "effects.png"
-    )
+    savefig(plot_effects(trace, data), output_figure_dir / "effects.png")
 
 
 if __name__ == "__main__":
