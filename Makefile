@@ -1,22 +1,18 @@
 .PHONY: chapter01
 
+## dvc repro
+repro: check_commit
+	poetry run dvc repro || git commit dvc.lock -m '[update] dvc repro'
+	poetry run dvc dag --md > PIPELINE.md
+	git commit dvc.lock PIPELINE.md -m '[update] dvc repro'
 
-repro:
-	poetry run dvc repro
+## check commit
+check_commit:
+	git status
+	git diff --exit-code --staged
+	git diff --exit-code
 
-all: chapter01
-
-dataset: data/raw/dataset.csv
-
-data/raw/dataset.csv:
-	mkdir -p data/raw/
-	wget https://git.io/vXTVC -O data/raw/dataset.csv
-
-chapter01: data/raw/dataset.csv
-	poetry run python -m chapter01.messages_analysis data/raw/dataset.csv \
-        --samples=40000 \
-        --sample_tune=10000
-
+## lint and format
 lint:
 	poetry run isort .
 	poetry run black chapter* -l 79
