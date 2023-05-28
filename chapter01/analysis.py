@@ -184,7 +184,7 @@ def main(**kwargs):
     savefig(plot_observed(data), output_figure_dir / "observed.png")
 
     # plot trace
-    savefig(plot_trace(trace, data), output_figure_dir / "trace.png")
+    savefig(plot_trace(trace, data), output_figure_dir / "posterior_dist.png")
 
     # test effects
     savefig(plot_effects(trace, data), output_figure_dir / "effects.png")
