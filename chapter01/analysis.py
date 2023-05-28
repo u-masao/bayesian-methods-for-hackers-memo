@@ -1,5 +1,6 @@
 import logging
 import os
+import pickle
 from pathlib import Path
 
 import click
@@ -42,26 +43,6 @@ def plot_observed(data):
     return fig
 
 
-def modeling(observed, samples=40000, sample_tune=10000, chains=3):
-    """
-    モデリングとサンプリングを実行する
-    """
-    logger = logging.getLogger(__name__)
-
-    alpha = 1.0 / observed.mean()
-    with pm.Model() as model:  # noqa: F841
-        lambda_1 = pm.Exponential("lambda_1", alpha)
-        lambda_2 = pm.Exponential("lambda_2", alpha)
-        tau = pm.DiscreteUniform("tau", lower=0, upper=len(observed))
-        index = np.arange(len(observed))
-        lambda_ = pm.math.switch(tau > index, lambda_1, lambda_2)
-        observation = pm.Poisson(  # noqa: F841
-            "observation", lambda_, observed=observed
-        )
-        logger.info("start sampling")
-        trace = pm.sample(samples, tune=sample_tune, chains=chains)
-        logger.info("end sampling")
-    return trace
 
 
 def plot_trace(trace, data):
@@ -158,34 +139,30 @@ def plot_effects(trace, data):
 
 
 @click.command()
-@click.argument("input_filepath", type=click.Path(exists=True))
-@click.option("--samples", type=int, default=40000)
-@click.option("--sample_tune", type=int, default=10000)
-@click.option("--chains", type=int, default=3)
+@click.argument("input_data_filepath", type=click.Path(exists=True))
+@click.argument("input_trace_filepath", type=click.Path(exists=True))
+@click.argument("input_model_filepath", type=click.Path(exists=True))
 def main(**kwargs):
     """
     メイン処理
     """
+    # init logger
     logger = logging.getLogger(__name__)
+    logger.info("process start")
+    logger.info(kwargs)
 
     # load data
-    data = load_dataset(kwargs["input_filepath"])
+    data = load_dataset(kwargs["input_data_filepath"])
     logger.info(f"data: {data}")
+
+    # load trace and model
+    trace = pickle.load(open(kwargs["input_trace_filepath"], "rb"))
+    model = pickle.load(open(kwargs["input_model_filepath"], "rb"))
+    with model:
+        pm.traceplot(trace)
 
     # plot data
     savefig(plot_observed(data), "reports/figures/observed.png")
-
-    # modeling and sampling
-    trace = modeling(
-        data,
-        samples=kwargs["samples"],
-        sample_tune=kwargs["sample_tune"],
-        chains=kwargs["chains"],
-    )
-
-    logger.info(f'trace lambda_1.shape: {trace["lambda_1"].shape}')
-    logger.info(f'trace lambda_2.shape: {trace["lambda_2"].shape}')
-    logger.info(f'trace tau.shape: {trace["tau"].shape}')
 
     # plot trace
     savefig(plot_trace(trace, data), "reports/figures/trace.png")
