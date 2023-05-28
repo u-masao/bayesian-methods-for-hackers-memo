@@ -151,6 +151,9 @@ def main(**kwargs):
     logger.info("process start")
     logger.info(kwargs)
 
+    # set output figure dir
+    output_figure_dir = Path(kwargs["output_figure_dir"])
+
     # load data
     data = load_dataset(kwargs["input_data_filepath"])
     logger.info(f"data: {data}")
@@ -161,8 +164,23 @@ def main(**kwargs):
     with model:
         pm.plot_trace(trace)
 
+    # save trace plot
+    with model:
+        axes = pm.plot_trace(trace, compact=True, combined=True)
+        fig = axes.ravel()[0].figure
+        for ax in axes.flatten():
+            ax.grid()
+            ax.legend()
+        fig.tight_layout()
+        fig.savefig(output_figure_dir / "traceplot.png")
+
+    # trace summary
+    with model:
+        summary_df = pm.summary(trace)
+        summary_df.to_csv(kwargs["output_summary_filepath"])
+        logger.info(f"trace summary: \n{summary_df}")
+
     # plot data
-    output_figure_dir = Path(kwargs["output_figure_dir"])
     savefig(plot_observed(data), output_figure_dir / "observed.png")
 
     # plot trace
@@ -170,19 +188,6 @@ def main(**kwargs):
 
     # test effects
     savefig(plot_effects(trace, data), output_figure_dir / "effects.png")
-
-    # trace summary
-    with model:
-        summary_df = pm.summary(trace)
-        summary_df.to_csv(kwargs["output_summary_filepath"])
-        logger.info(f"trace summary: \n{summary_df}")
-        axes = pm.plot_trace(trace)
-        fig = axes.ravel()[0].figure
-        for ax in axes.flatten():
-            ax.grid()
-            ax.legend()
-        fig.tight_layout()
-        fig.savefig(output_figure_dir / "traceplot.png")
 
 
 if __name__ == "__main__":
