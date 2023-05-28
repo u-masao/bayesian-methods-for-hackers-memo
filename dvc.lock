@@ -11,15 +11,15 @@ stages:
       data/interim/model.pickle --samples=40000 --sample_tune=10000
     deps:
     - path: chapter01/sampling.py
-      md5: 8a6c4c946b259a472d6163f984bc639c
-      size: 5474
+      md5: 12e288e017bd90603bba9e72d01b5baf
+      size: 2315
     - path: data/raw/dataset.csv
       md5: 1a53f0e394e74914659007cc5f153b9f
       size: 1850
     outs:
     - path: data/interim/model.pickle
-      md5: 87b60456b1f45ba64446b6fc95f0a9bc
+      md5: 9d56601cb1b07af83328d3025939a47e
       size: 767671
     - path: data/interim/trace.pickle
-      md5: 67fd7654420e7ece51ecab10a5fef4f1
-      size: 19514844
+      md5: 40a283f1c433cdeb4a60b9274a8a66ac
+      size: 19514849
