@@ -25,11 +25,11 @@ stages:
       size: 19514850
   analysis:
     cmd: poetry run python -m chapter01.analysis data/raw/dataset.csv data/interim/trace.pickle
-      data/interim/model.pickle reports/figures/chapter01/
+      data/interim/model.pickle reports/figures/chapter01/ data/processed/trace_summary.csv
     deps:
     - path: chapter01/analysis.py
-      md5: 57f9c6aea3f39db9e6e781c482028645
-      size: 4643
+      md5: 5561556565806e23168856b1898452a5
+      size: 4896
     - path: data/interim/model.pickle
       md5: 44cbff7f0e4d5d9b54f5404ced506b21
       size: 767672
@@ -40,6 +40,9 @@ stages:
       md5: 1a53f0e394e74914659007cc5f153b9f
       size: 1850
     outs:
+    - path: data/processed/trace_summary.csv
+      md5: 550ddfef45c5ee0e1bf045f8fba4ac30
+      size: 261
     - path: reports/figures/chapter01/
       md5: 0885436055e3f2759e223e71deaba23f.dir
       size: 95781
