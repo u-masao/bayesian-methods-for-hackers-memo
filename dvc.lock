@@ -8,7 +8,7 @@ stages:
       size: 1850
   sampling:
     cmd: poetry run python -m chapter01.sampling data/raw/dataset.csv data/interim/trace.pickle
-      data/interim/model.pickle --samples=40000 --sample_tune=10000
+      data/interim/model.pickle --samples=4000 --sample_tune=1000
     deps:
     - path: chapter01/sampling.py
       md5: f73a55e8db84b3c974d3b8e75feeb435
@@ -18,11 +18,11 @@ stages:
       size: 1850
     outs:
     - path: data/interim/model.pickle
-      md5: 44cbff7f0e4d5d9b54f5404ced506b21
+      md5: 860d5fd3645786f23e8aab6fdda0b562
       size: 767672
     - path: data/interim/trace.pickle
-      md5: b62ca19653abd0e1d350b6b68ff21716
-      size: 19514850
+      md5: f2ecb2c7ab7d3b33813f9b66c34e3006
+      size: 2666820
   analysis:
     cmd: poetry run python -m chapter01.analysis data/raw/dataset.csv data/interim/trace.pickle
       data/interim/model.pickle reports/figures/chapter01/ data/processed/trace_summary.csv
@@ -31,19 +31,19 @@ stages:
       md5: 5b22b3adcf612fd80b62ef70b0edbf3c
       size: 5215
     - path: data/interim/model.pickle
-      md5: 44cbff7f0e4d5d9b54f5404ced506b21
+      md5: 860d5fd3645786f23e8aab6fdda0b562
       size: 767672
     - path: data/interim/trace.pickle
-      md5: b62ca19653abd0e1d350b6b68ff21716
-      size: 19514850
+      md5: f2ecb2c7ab7d3b33813f9b66c34e3006
+      size: 2666820
     - path: data/raw/dataset.csv
       md5: 1a53f0e394e74914659007cc5f153b9f
       size: 1850
     outs:
     - path: data/processed/trace_summary.csv
-      md5: 550ddfef45c5ee0e1bf045f8fba4ac30
-      size: 261
+      md5: 4367ba715e0d003c9b4a022b1fffbca5
+      size: 255
     - path: reports/figures/chapter01/
-      md5: 8cca9eeaaab0a6049fe64bf6cb84d618.dir
-      size: 212694
+      md5: 89298950c44250aecaaac97e228bfa35.dir
+      size: 248762
       nfiles: 4
