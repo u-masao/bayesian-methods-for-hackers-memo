@@ -166,7 +166,7 @@ def main(**kwargs):
 
     # save trace plot
     with model:
-        axes = pm.plot_trace(trace, compact=True, combined=False)
+        axes = pm.plot_trace(trace, compact=False, combined=True)
         fig = axes.ravel()[0].figure
         for ax in axes.flatten():
             ax.grid()
