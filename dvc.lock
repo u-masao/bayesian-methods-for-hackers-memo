@@ -92,8 +92,8 @@ stages:
       md5: 1a53f0e394e74914659007cc5f153b9f
       size: 1850
     - path: src/chapter01/analysis.py
-      md5: 8f7b067a61a41eeb83b5a7786a23656d
-      size: 4938
+      md5: 71c7cca434be4af0e8c66751dfe03aaf
+      size: 4893
     - path: src/utils.py
       md5: 4098ae6e4d7850e65fa0155c26049fff
       size: 692
