@@ -41,7 +41,7 @@ stages:
     - src/chapter02/one_bernoulli.py
     - src/utils.py
     outs:
-    - reports/figures/chapter02/one/
+    - reports/figures/chapter02/one/bernoulli.png
   chap02_two_bernoulli:
     cmd: >-
       poetry run python -m src.chapter02.two_bernoulli
@@ -50,4 +50,4 @@ stages:
     - src/chapter02/two_bernoulli.py
     - src/utils.py
     outs:
-    - reports/figures/chapter02/two/
+    - reports/figures/chapter02/two/bernoulli.png
