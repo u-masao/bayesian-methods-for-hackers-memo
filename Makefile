@@ -14,6 +14,6 @@ check_commit: lint
 
 ## lint and format
 lint:
-	poetry run isort .
-	poetry run black chapter* -l 79
-	poetry run flake8 .
+	poetry run isort src
+	poetry run black src -l 79
+	poetry run flake8 src

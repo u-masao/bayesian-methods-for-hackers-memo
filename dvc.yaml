@@ -7,7 +7,7 @@ stages:
     - data/raw/dataset.csv
   chap01_sampling:
     cmd: >-
-      poetry run python -m chapter01.sampling
+      poetry run python -m src.chapter01.sampling
       data/raw/dataset.csv
       data/interim/trace_and_model.pickle
       --samples=4000
@@ -19,7 +19,7 @@ stages:
     - data/interim/trace_and_model.pickle
   chap01_analysis:
     cmd: >-
-      poetry run python -m chapter01.analysis
+      poetry run python -m src.chapter01.analysis
       data/raw/dataset.csv
       data/interim/trace_and_model.pickle
       reports/figures/chapter01/
@@ -33,7 +33,7 @@ stages:
     - data/processed/trace_summary.csv
   chap02_ab_testing:
     cmd: >-
-      poetry run python -m chapter02.ab_testing
+      poetry run python -m src.chapter02.ab_testing
     deps:
     - chapter02/ab_testing.py
     outs:
