@@ -1,3 +1,4 @@
+import logging
 import os
 from pathlib import Path
 
@@ -41,9 +42,13 @@ def main(**kwargs):
     fig, ax = plt.subplots(1, 1, figsize=(12, 8))
     ax.vlines(p_true, 0, 90, linestyle="--", label="true $p_A$ (unknown)")
     ax.hist(burned_trace["p"], bins=25, density=True)
+    ax.legend()
+    ax.grid()
     fig.suptitle("$p_A$ の事後分布と真の $p_A$")
     savefig(fig, Path(kwargs["figure_dir"]) / "bernoulli.png")
 
 
 if __name__ == "__main__":
+    log_fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    logging.basicConfig(level=logging.INFO, format=log_fmt)
     main()
