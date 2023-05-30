@@ -1,6 +1,7 @@
 import os
 from pathlib import Path
 
+import click
 import japanize_matplotlib  # noqa: F401
 import matplotlib.pyplot as plt
 import numpy as np
@@ -13,7 +14,11 @@ def savefig(fig, path: str) -> None:
     fig.savefig(path)
 
 
-def main():
+@click.command()
+@click.option(
+    "--figure_dir", type=click.Path(), default="reports/figures/chapter02/"
+)
+def main(**kwargs):
     model = pm.Model()
     with model:
         p = pm.Uniform("p", lower=0, upper=1)
@@ -37,7 +42,7 @@ def main():
     ax.vlines(p_true, 0, 90, linestyle="--", label="true $p_A$ (unknown)")
     ax.hist(burned_trace["p"], bins=25, histtpye="stepfilled", density=True)
     fig.suptitle("$p_A$ の事後分布と真の $p_A$")
-    savefig(fig, "reports/figures/ch02/bernoulli.png")
+    savefig(fig, Path(kwargs["figure_dir"]) / "bernoulli.png")
 
 
 if __name__ == "__main__":
