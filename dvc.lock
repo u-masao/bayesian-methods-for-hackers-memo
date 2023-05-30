@@ -114,10 +114,10 @@ stages:
     cmd: poetry run python -m src.chapter02.two_bernoulli --figure_dir reports/figures/chapter02/two/
     deps:
     - path: src/chapter02/two_bernoulli.py
-      md5: c32e899e7f79adb2cb0db7d70e967de9
-      size: 1574
+      md5: ec0a6ba649e780f3a5219f1314d811a5
+      size: 2262
     outs:
     - path: reports/figures/chapter02/two/
-      md5: ea09f5e9aa31e19e6e5cbe6dc52ad721.dir
-      size: 21982
+      md5: c7a43a7a4ceac0a27a4fe9ce27701e53.dir
+      size: 29272
       nfiles: 1
