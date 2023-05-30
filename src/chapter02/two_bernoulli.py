@@ -44,7 +44,8 @@ def get_color(i, n, name="hsv"):
 
 
 def plot_histogram_single(ax, p_true, sample, value_name="", color="green"):
-    color = get_color(int(np.random.rand() * 12))
+    n_colors = 12
+    color = get_color(int(np.random.rand() * n_colors), n_colors)
     ax.vlines(
         p_true,
         0,
