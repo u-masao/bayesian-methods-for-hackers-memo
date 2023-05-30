@@ -19,7 +19,9 @@ def load_trace_and_model(model_path: str):
     return trace, model
 
 
-def save_trace_and_model(trace, model, model_path: str):
+def save_trace_and_model(trace, model, model_path_string: str):
     # save trace and model
-    with open(model_path, "wb") as fo:
+    save_path = Path(model_path_string)
+    os.makedirs(save_path.parent, exist_ok=True)
+    with open(save_path, "wb") as fo:
         pickle.dump((trace, model), fo)
