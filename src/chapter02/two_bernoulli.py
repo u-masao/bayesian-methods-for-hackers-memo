@@ -39,24 +39,38 @@ def sampling(occurences_a, occurences_b):
     return burned_trace, model
 
 
-def plot_histogram_overlap(ax, p_a_true, p_b_true, burned_trace):
-    ax.vlines(p_a_true, 0, 90, linestyle="--", label="true $p_A$ (unknown)")
-    ax.vlines(p_b_true, 0, 90, linestyle="--", label="true $p_B$ (unknown)")
-    ax.hist(
-        burned_trace["p_a"],
-        bins=25,
-        density=True,
-        label="$p_a$ dist.",
-        alpha=0.5,
+def get_color(i, n, name="hsv"):
+    return plt.cm.get_cmap(name, n)(i)
+
+
+def plot_histogram_single(ax, p_true, sample, value_name="", color="green"):
+    color = get_color(int(np.random.rand() * 12))
+    ax.vlines(
+        p_true,
+        0,
+        90,
+        linestyle="--",
+        label=f"true {value_name} (unknown)",
+        c=color,
+        alpha=0.7,
     )
     ax.hist(
-        burned_trace["p_b"],
+        sample,
         bins=25,
         density=True,
-        label="$p_b$ dist.",
-        alpha=0.5,
+        label=f"{value_name} dist.",
+        alpha=0.7,
+        c=color,
     )
 
+
+def plot_histogram_overlap(ax, p_a_true, p_b_true, burned_trace):
+    plot_histogram_single(
+        ax, p_a_true, burned_trace["p_a"], value_name="$p_a$"
+    )
+    plot_histogram_single(
+        ax, p_b_true, burned_trace["p_b"], value_name="$p_b$"
+    )
     ax.legend()
     ax.grid()
 
