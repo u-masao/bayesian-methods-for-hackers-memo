@@ -138,8 +138,7 @@ def plot_effects(trace, data):
 
 @click.command()
 @click.argument("input_data_filepath", type=click.Path(exists=True))
-@click.argument("input_trace_filepath", type=click.Path(exists=True))
-@click.argument("input_model_filepath", type=click.Path(exists=True))
+@click.argument("input_trace_and_model_filepath", type=click.Path(exists=True))
 @click.argument("output_figure_dir", type=click.Path())
 @click.argument("output_summary_filepath", type=click.Path())
 def main(**kwargs):
@@ -159,8 +158,9 @@ def main(**kwargs):
     logger.info(f"data: {data}")
 
     # load trace and model
-    trace = pickle.load(open(kwargs["input_trace_filepath"], "rb"))
-    model = pickle.load(open(kwargs["input_model_filepath"], "rb"))
+    trace, model = pickle.load(
+        open(kwargs["input_trace_and_model_filepath"], "rb")
+    )
     with model:
         pm.plot_trace(trace)
 

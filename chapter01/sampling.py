@@ -38,10 +38,17 @@ def modeling(observed, samples=40000, sample_tune=10000, chains=3):
     return trace, model
 
 
+def save_trace_and_model(trace, model, save_path):
+    # save trace and model
+    with open(save_path, "wb") as fo:
+        pickle.dump(trace, fo)
+    with open(save_path, "wb") as fo:
+        pickle.dump(model, fo)
+
+
 @click.command()
 @click.argument("input_filepath", type=click.Path(exists=True))
-@click.argument("output_trace_filepath", type=click.Path())
-@click.argument("output_model_filepath", type=click.Path())
+@click.argument("output_filepath", type=click.Path())
 @click.option("--samples", type=int, default=40000)
 @click.option("--sample_tune", type=int, default=10000)
 @click.option("--chains", type=int, default=3)
@@ -68,10 +75,7 @@ def main(**kwargs):
     )
 
     # save trace and model
-    with open(kwargs["output_trace_filepath"], "wb") as fo:
-        pickle.dump(trace, fo)
-    with open(kwargs["output_model_filepath"], "wb") as fo:
-        pickle.dump(model, fo)
+    save_trace_and_model(trace, model, kwargs["output_filepath"])
 
     # cleanup
     logger.info("process complete")
