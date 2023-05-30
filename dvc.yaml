@@ -9,29 +9,25 @@ stages:
     cmd: >-
       poetry run python -m chapter01.sampling
       data/raw/dataset.csv
-      data/interim/trace.pickle
-      data/interim/model.pickle
+      data/interim/trace_and_model.pickle
       --samples=4000
       --sample_tune=1000
     deps:
     - chapter01/sampling.py
     - data/raw/dataset.csv
     outs:
-    - data/interim/trace.pickle
-    - data/interim/model.pickle
+    - data/interim/trace_and_model.pickle
   analysis:
     cmd: >-
       poetry run python -m chapter01.analysis
       data/raw/dataset.csv
-      data/interim/trace.pickle
-      data/interim/model.pickle
+      data/interim/trace_and_model.pickle
       reports/figures/chapter01/
       data/processed/trace_summary.csv
     deps:
     - chapter01/analysis.py
     - data/raw/dataset.csv
-    - data/interim/trace.pickle
-    - data/interim/model.pickle
+    - data/interim/trace_and_model.pickle
     outs:
     - reports/figures/chapter01/
     - data/processed/trace_summary.csv
