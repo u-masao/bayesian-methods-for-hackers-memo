@@ -61,7 +61,7 @@ def plot_histogram_single(ax, p_true, sample, value_name="", color="green"):
         density=True,
         label=f"{value_name} dist.",
         alpha=0.7,
-        c=color,
+        color=color,
     )
 
 
