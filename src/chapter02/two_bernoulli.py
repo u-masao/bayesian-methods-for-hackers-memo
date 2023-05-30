@@ -47,7 +47,7 @@ def main(**kwargs):
     with model:
         p_a = pm.Uniform("p_a", 0, 1)
         p_b = pm.Uniform("p_b", 0, 1)
-        delta = pm.Deterministics("delta", p_a - p_b)  # noqa: F841
+        delta = pm.Deterministic("delta", p_a - p_b)  # noqa: F841
         obs_a = pm.Bernoulli("obs_a", p_a, observed=occurences_a)  # noqa: F841
         obs_b = pm.Bernoulli("obs_b", p_b, observed=occurences_b)  # noqa: F841
         step = pm.Metropolis()
