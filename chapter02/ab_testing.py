@@ -40,7 +40,7 @@ def main(**kwargs):
 
     fig, ax = plt.subplots(1, 1, figsize=(12, 8))
     ax.vlines(p_true, 0, 90, linestyle="--", label="true $p_A$ (unknown)")
-    ax.hist(burned_trace["p"], bins=25, histtpye="stepfilled", density=True)
+    ax.hist(burned_trace["p"], bins=25, density=True)
     fig.suptitle("$p_A$ の事後分布と真の $p_A$")
     savefig(fig, Path(kwargs["figure_dir"]) / "bernoulli.png")
 
