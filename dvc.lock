@@ -115,21 +115,19 @@ stages:
       md5: 4098ae6e4d7850e65fa0155c26049fff
       size: 692
     outs:
-    - path: reports/figures/chapter02/one/
-      md5: 461bb783f8c6dd644d7d9fdea95f6156.dir
-      size: 22480
-      nfiles: 1
+    - path: reports/figures/chapter02/one/bernoulli.png
+      md5: ba57bc92a9e117427c0d37ff163754d8
+      size: 21958
   chap02_two_bernoulli:
     cmd: poetry run python -m src.chapter02.two_bernoulli --figure_dir reports/figures/chapter02/two/
     deps:
     - path: src/chapter02/two_bernoulli.py
-      md5: bc066c78cd390ae86a23d0848b38997a
-      size: 2863
+      md5: 72e88653768be16a345134aa35c7c1a6
+      size: 2864
     - path: src/utils.py
       md5: 4098ae6e4d7850e65fa0155c26049fff
       size: 692
     outs:
-    - path: reports/figures/chapter02/two/
-      md5: 0090e2ef2e5c56ffbec1ef97df38b393.dir
-      size: 30111
-      nfiles: 1
+    - path: reports/figures/chapter02/two/bernoulli.png
+      md5: 9cb796a43997452535faeac478e9419a
+      size: 31225
