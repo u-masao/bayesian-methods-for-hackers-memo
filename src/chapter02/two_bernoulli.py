@@ -39,8 +39,7 @@ def sampling(occurences_a, occurences_b):
     return burned_trace, model
 
 
-def plot_histogram(p_a_true, p_b_true, burned_trace):
-    fig, ax = plt.subplots(1, 1, figsize=(12, 8))
+def plot_histogram_overlap(ax, p_a_true, p_b_true, burned_trace):
     ax.vlines(p_a_true, 0, 90, linestyle="--", label="true $p_A$ (unknown)")
     ax.vlines(p_b_true, 0, 90, linestyle="--", label="true $p_B$ (unknown)")
     ax.hist(
@@ -60,6 +59,14 @@ def plot_histogram(p_a_true, p_b_true, burned_trace):
 
     ax.legend()
     ax.grid()
+
+
+def plot_histogram(p_a_true, p_b_true, burned_trace):
+    fig, axes = plt.subplots(5, 1, figsize=(12, 8), sharex=True)
+    axes = axes.flatten()
+
+    plot_histogram_overlap(axes[0], p_a_true, p_b_true, burned_trace)
+
     fig.suptitle("$p_A$ と $p_B$ の事後分布と真の値")
     return fig
 
