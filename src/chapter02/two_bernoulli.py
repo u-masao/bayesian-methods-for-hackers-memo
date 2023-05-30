@@ -57,8 +57,20 @@ def main(**kwargs):
     fig, ax = plt.subplots(1, 1, figsize=(12, 8))
     ax.vlines(p_a_true, 0, 90, linestyle="--", label="true $p_A$ (unknown)")
     ax.vlines(p_b_true, 0, 90, linestyle="--", label="true $p_B$ (unknown)")
-    ax.hist(burned_trace["p_a"], bins=25, density=True, label="$p_a$ dist.")
-    ax.hist(burned_trace["p_b"], bins=25, density=True, label="$p_b$ dist.")
+    ax.hist(
+        burned_trace["p_a"],
+        bins=25,
+        density=True,
+        label="$p_a$ dist.",
+        alpha=0.5,
+    )
+    ax.hist(
+        burned_trace["p_b"],
+        bins=25,
+        density=True,
+        label="$p_b$ dist.",
+        alpha=0.5,
+    )
     ax.legend()
     ax.grid()
     fig.suptitle("$p_A$ と $p_B$ の事後分布と真の値")
