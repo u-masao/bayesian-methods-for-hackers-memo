@@ -75,6 +75,21 @@ def main(**kwargs):
         label="$p_b$ dist.",
         alpha=0.5,
     )
+    ax.hist(
+        occurences_a,
+        density=True,
+        bins=25,
+        label="$occurences_a$",
+        alpha=0.5,
+    )
+    ax.hist(
+        occurences_b,
+        density=True,
+        bins=25,
+        label="$occurences_b$",
+        alpha=0.5,
+    )
+
     ax.legend()
     ax.grid()
     fig.suptitle("$p_A$ と $p_B$ の事後分布と真の値")
