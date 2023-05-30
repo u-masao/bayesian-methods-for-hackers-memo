@@ -13,7 +13,7 @@ stages:
       --samples=4000
       --sample_tune=1000
     deps:
-    - chapter01/sampling.py
+    - src/chapter01/sampling.py
     - data/raw/dataset.csv
     outs:
     - data/interim/trace_and_model.pickle
@@ -25,7 +25,7 @@ stages:
       reports/figures/chapter01/
       data/processed/trace_summary.csv
     deps:
-    - chapter01/analysis.py
+    - src/chapter01/analysis.py
     - data/raw/dataset.csv
     - data/interim/trace_and_model.pickle
     outs:
@@ -35,6 +35,6 @@ stages:
     cmd: >-
       poetry run python -m src.chapter02.ab_testing
     deps:
-    - chapter02/ab_testing.py
+    - src/chapter02/ab_testing.py
     outs:
     - reports/figures/chapter02/
