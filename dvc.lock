@@ -53,3 +53,28 @@ stages:
     - path: data/raw/dataset.csv
       md5: 1a53f0e394e74914659007cc5f153b9f
       size: 1850
+  chap02_ab_testing:
+    cmd: poetry run python -m chapter02.ab_testing
+    deps:
+    - path: chapter02/ab_testing.py
+      md5: ce37705d5169a6f81cecc7f69d3381a7
+      size: 1400
+    outs:
+    - path: reports/figures/chapter02/
+      md5: dfa79c7d999a9dfada7ff6ea004ffb4e.dir
+      size: 16900
+      nfiles: 1
+  chap01_sampling:
+    cmd: poetry run python -m chapter01.sampling data/raw/dataset.csv data/interim/trace_and_model.pickle
+      --samples=4000 --sample_tune=1000
+    deps:
+    - path: chapter01/sampling.py
+      md5: aba5c18443557f120292475410e7e72f
+      size: 2346
+    - path: data/raw/dataset.csv
+      md5: 1a53f0e394e74914659007cc5f153b9f
+      size: 1850
+    outs:
+    - path: data/interim/trace_and_model.pickle
+      md5: 444eb25b1fb4b4b41ab0ecdf2061795e
+      size: 768648
