@@ -153,8 +153,6 @@ def main(**kwargs):
     trace, model = pickle.load(
         open(kwargs["input_trace_and_model_filepath"], "rb")
     )
-    with model:
-        pm.plot_trace(trace)
 
     # save trace plot
     with model:
