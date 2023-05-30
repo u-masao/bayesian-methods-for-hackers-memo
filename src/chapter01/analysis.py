@@ -1,5 +1,4 @@
 import logging
-import os
 import pickle
 from pathlib import Path
 
@@ -10,6 +9,8 @@ import numpy as np
 import pandas as pd
 import pymc3 as pm
 
+from src.utils import savefig
+
 
 def load_dataset(filepath: str):
     """
@@ -17,15 +18,6 @@ def load_dataset(filepath: str):
     """
     data = pd.read_csv(filepath)
     return data.values.T[0]
-
-
-def savefig(fig, save_path_string: str):
-    """
-    figure を保存する
-    """
-    save_path = Path(save_path_string)
-    os.makedirs(save_path.parent, exist_ok=True)
-    fig.savefig(save_path)
 
 
 def plot_observed(data):

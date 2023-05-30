@@ -14,6 +14,7 @@ stages:
       --sample_tune=1000
     deps:
     - src/chapter01/sampling.py
+    - src/utils.py
     - data/raw/dataset.csv
     outs:
     - data/interim/trace_and_model.pickle
@@ -26,6 +27,7 @@ stages:
       data/processed/trace_summary.csv
     deps:
     - src/chapter01/analysis.py
+    - src/utils.py
     - data/raw/dataset.csv
     - data/interim/trace_and_model.pickle
     outs:
@@ -37,6 +39,7 @@ stages:
       --figure_dir reports/figures/chapter02/one/
     deps:
     - src/chapter02/one_bernoulli.py
+    - src/utils.py
     outs:
     - reports/figures/chapter02/one/
   chap02_two_bernoulli:
@@ -45,5 +48,6 @@ stages:
       --figure_dir reports/figures/chapter02/two/
     deps:
     - src/chapter02/two_bernoulli.py
+    - src/utils.py
     outs:
     - reports/figures/chapter02/two/

@@ -1,10 +1,11 @@
 import logging
-import pickle
 
 import click
 import numpy as np
 import pandas as pd
 import pymc3 as pm
+
+from src.utils import save_trace_and_model
 
 
 def load_dataset(filepath: str):
@@ -36,12 +37,6 @@ def modeling(observed, samples=40000, sample_tune=10000, chains=3):
         trace = pm.sample(samples, tune=sample_tune, chains=chains)
         logger.info("end sampling")
     return trace, model
-
-
-def save_trace_and_model(trace, model, save_path):
-    # save trace and model
-    with open(save_path, "wb") as fo:
-        pickle.dump((trace, model), fo)
 
 
 @click.command()

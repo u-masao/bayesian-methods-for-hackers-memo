@@ -1,5 +1,4 @@
 import logging
-import os
 from pathlib import Path
 
 import click
@@ -9,10 +8,7 @@ import numpy as np
 import pymc3 as pm
 import scipy.stats as stats
 
-
-def savefig(fig, path: str) -> None:
-    os.makedirs(Path(path).parent, exist_ok=True)
-    fig.savefig(path)
+from src.utils import save_trace_and_model, savefig
 
 
 def log_metrics(occurences, p_true, label):
@@ -32,6 +28,11 @@ def log_metrics(occurences, p_true, label):
 @click.option(
     "--figure_dir", type=click.Path(), default="reports/figures/chapter02/"
 )
+@click.option(
+    "--model_output_filepath",
+    type=click.Path(),
+    default="models/chapter02/two_bernoulli.pickle",
+)
 def main(**kwargs):
     p_a_true = 0.05
     p_b_true = 0.04
@@ -40,6 +41,7 @@ def main(**kwargs):
     occurences_a = stats.bernoulli.rvs(p_a_true, size=n_a)
     occurences_b = stats.bernoulli.rvs(p_b_true, size=n_b)
 
+    log_metrics(occurences_a, p_a_true, "a")
     log_metrics(occurences_a, p_a_true, "a")
     log_metrics(occurences_b, p_b_true, "b")
 
@@ -53,6 +55,8 @@ def main(**kwargs):
         step = pm.Metropolis()
         trace = pm.sample(20000, step=step)
         burned_trace = trace[1000:]
+
+    save_trace_and_model(trace, model, kwargs["model_output_filepath"])
 
     fig, ax = plt.subplots(1, 1, figsize=(12, 8))
     ax.vlines(p_a_true, 0, 90, linestyle="--", label="true $p_A$ (unknown)")

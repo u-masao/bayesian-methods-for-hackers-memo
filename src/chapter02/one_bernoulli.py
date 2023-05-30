@@ -1,5 +1,4 @@
 import logging
-import os
 from pathlib import Path
 
 import click
@@ -9,15 +8,30 @@ import numpy as np
 import pymc3 as pm
 import scipy.stats as stats
 
+from src.utils import save_trace_and_model, savefig
 
-def savefig(fig, path: str) -> None:
-    os.makedirs(Path(path).parent, exist_ok=True)
-    fig.savefig(path)
+
+def log_metrics(occurences, p_true, label):
+    logger = logging.getLogger(__name__)
+    metrics = {
+        "occurrence": occurences,
+        "sum": np.sum(occurences),
+        "mean": np.mean(occurences),
+        "mean - p_true:": np.mean(occurences) - p_true,
+        "(mean - p_true) / p_true:": (np.mean(occurences) - p_true) / p_true,
+    }
+
+    logger.info(f"{label} metrics: \n{metrics}")
 
 
 @click.command()
 @click.option(
     "--figure_dir", type=click.Path(), default="reports/figures/chapter02/"
+)
+@click.option(
+    "--model_output_filepath",
+    type=click.Path(),
+    default="models/chapter02/one_bernoulli.pickle",
 )
 def main(**kwargs):
     model = pm.Model()
@@ -27,17 +41,15 @@ def main(**kwargs):
     p_true = 0.05
     N = 1500
     occurrences = stats.bernoulli.rvs(p_true, size=N)
-    print("occurrence:", occurrences)
-    print("sum:", np.sum(occurrences))
-    print("mean:", np.mean(occurrences))
-    print("mean - p_true:", np.mean(occurrences) - p_true)
-    print("(mean - p_true)/ p_true:", (np.mean(occurrences) - p_true) / p_true)
+    log_metrics(occurrences, p_true, "a")
 
     with model:
         obs = pm.Bernoulli("obs", p, observed=occurrences)  # noqa: F841
         step = pm.Metropolis()
         trace = pm.sample(18000, step=step)
         burned_trace = trace[1000:]
+
+    save_trace_and_model(trace, model, kwargs["model_output_filepath"])
 
     fig, ax = plt.subplots(1, 1, figsize=(12, 8))
     ax.vlines(p_true, 0, 90, linestyle="--", label="true $p_A$ (unknown)")
