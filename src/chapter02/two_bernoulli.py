@@ -8,7 +8,7 @@ import numpy as np
 import pymc3 as pm
 import scipy.stats as stats
 
-from src.utils import save_trace_and_model, savefig
+from src.utils import plot_trace, save_trace_and_model, savefig
 
 
 def log_metrics(occurences, p_true, label):
@@ -88,6 +88,10 @@ def main(**kwargs):
 
     trace, model = sampling(occurences_a, occurences_b)
     save_trace_and_model(trace, model, kwargs["model_output_filepath"])
+    savefig(
+        plot_trace(trace, model),
+        Path(kwargs["figure_dir"]) / "trace.png",
+    )
 
     savefig(
         plot_histogram(

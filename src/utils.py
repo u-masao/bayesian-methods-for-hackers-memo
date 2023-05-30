@@ -2,6 +2,20 @@ import os
 import pickle
 from pathlib import Path
 
+import pymc3 as pm
+
+
+def plot_trace(trace, model):
+    # save trace plot
+    with model:
+        axes = pm.plot_trace(trace, compact=False, combined=False)
+        for ax in axes.flatten():
+            ax.grid()
+        fig = axes.ravel()[0].figure
+        fig.tight_layout()
+        fig.suptitle("trace plot")
+    return fig
+
 
 def savefig(fig, save_path_string: str) -> None:
     """
