@@ -47,3 +47,9 @@ stages:
       md5: 89298950c44250aecaaac97e228bfa35.dir
       size: 248762
       nfiles: 4
+  chap01_download_data:
+    cmd: wget https://git.io/vXTVC -O data/raw/dataset.csv
+    outs:
+    - path: data/raw/dataset.csv
+      md5: 1a53f0e394e74914659007cc5f153b9f
+      size: 1850
