@@ -9,7 +9,7 @@ import numpy as np
 import pandas as pd
 import pymc3 as pm
 
-from src.utils import savefig
+from src.utils import plot_trace, savefig
 
 
 def load_dataset(filepath: str):
@@ -35,7 +35,7 @@ def plot_observed(data):
     return fig
 
 
-def plot_trace(trace, data):
+def plot_expected(trace, data):
     """
     trace をプロットする
     """
@@ -155,14 +155,7 @@ def main(**kwargs):
     )
 
     # save trace plot
-    with model:
-        axes = pm.plot_trace(trace, compact=False, combined=False)
-        for ax in axes.flatten():
-            ax.grid()
-        fig = axes.ravel()[0].figure
-        fig.tight_layout()
-        fig.suptitle("trace plot")
-        savefig(fig, output_figure_dir / "traceplot.png")
+    savefig(plot_trace(trace, model), output_figure_dir / "traceplot.png")
 
     # trace summary
     with model:
@@ -172,7 +165,9 @@ def main(**kwargs):
 
     # plot data
     savefig(plot_observed(data), output_figure_dir / "observed.png")
-    savefig(plot_trace(trace, data), output_figure_dir / "posterior_dist.png")
+    savefig(
+        plot_expected(trace, data), output_figure_dir / "posterior_dist.png"
+    )
     savefig(plot_effects(trace, data), output_figure_dir / "effects.png")
 
 
