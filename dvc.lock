@@ -54,48 +54,48 @@ stages:
       md5: 1a53f0e394e74914659007cc5f153b9f
       size: 1850
   chap02_ab_testing:
-    cmd: poetry run python -m chapter02.ab_testing
+    cmd: poetry run python -m src.chapter02.ab_testing
     deps:
-    - path: chapter02/ab_testing.py
+    - path: src/chapter02/ab_testing.py
       md5: ce37705d5169a6f81cecc7f69d3381a7
       size: 1400
     outs:
     - path: reports/figures/chapter02/
-      md5: dfa79c7d999a9dfada7ff6ea004ffb4e.dir
-      size: 16900
+      md5: 2d10ee016fa7688a9941ef9db1f2c6c4.dir
+      size: 17215
       nfiles: 1
   chap01_sampling:
-    cmd: poetry run python -m chapter01.sampling data/raw/dataset.csv data/interim/trace_and_model.pickle
+    cmd: poetry run python -m src.chapter01.sampling data/raw/dataset.csv data/interim/trace_and_model.pickle
       --samples=4000 --sample_tune=1000
     deps:
-    - path: chapter01/sampling.py
+    - path: data/raw/dataset.csv
+      md5: 1a53f0e394e74914659007cc5f153b9f
+      size: 1850
+    - path: src/chapter01/sampling.py
       md5: 1a9c95f992a1f6b3fe4ccb17b9ae7b5d
       size: 2286
-    - path: data/raw/dataset.csv
-      md5: 1a53f0e394e74914659007cc5f153b9f
-      size: 1850
     outs:
     - path: data/interim/trace_and_model.pickle
-      md5: 705a0f1800c13e9339a399167609c9d0
-      size: 2667488
+      md5: 3ed9bafcc0073a6352434a9683c4cb11
+      size: 2667496
   chap01_analysis:
-    cmd: poetry run python -m chapter01.analysis data/raw/dataset.csv data/interim/trace_and_model.pickle
+    cmd: poetry run python -m src.chapter01.analysis data/raw/dataset.csv data/interim/trace_and_model.pickle
       reports/figures/chapter01/ data/processed/trace_summary.csv
     deps:
-    - path: chapter01/analysis.py
-      md5: f87244f1ad0e8dc73a6fe8129ab9bfb8
-      size: 5118
     - path: data/interim/trace_and_model.pickle
-      md5: 705a0f1800c13e9339a399167609c9d0
-      size: 2667488
+      md5: 3ed9bafcc0073a6352434a9683c4cb11
+      size: 2667496
     - path: data/raw/dataset.csv
       md5: 1a53f0e394e74914659007cc5f153b9f
       size: 1850
+    - path: src/chapter01/analysis.py
+      md5: f87244f1ad0e8dc73a6fe8129ab9bfb8
+      size: 5118
     outs:
     - path: data/processed/trace_summary.csv
-      md5: 1bac72d2137a429963c23c14c7dffa23
-      size: 251
+      md5: 07fa9ce50302af5b0977c1d2fffeebcf
+      size: 253
     - path: reports/figures/chapter01/
-      md5: 91b12a7011509b2c1aca01ea365e88e0.dir
-      size: 251497
+      md5: d8a4b2ca8a197c58b79aabbde479b160.dir
+      size: 256936
       nfiles: 4
