@@ -41,9 +41,7 @@ def modeling(observed, samples=40000, sample_tune=10000, chains=3):
 def save_trace_and_model(trace, model, save_path):
     # save trace and model
     with open(save_path, "wb") as fo:
-        pickle.dump(trace, fo)
-    with open(save_path, "wb") as fo:
-        pickle.dump(model, fo)
+        pickle.dump((trace, model), fo)
 
 
 @click.command()

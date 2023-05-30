@@ -4,7 +4,7 @@
 repro: check_commit
 	poetry run dvc repro || git commit dvc.lock -m '[update] dvc repro'
 	poetry run dvc dag --md > PIPELINE.md
-	git commit dvc.lock PIPELINE.md -m '[update] dvc repro'
+	git commit dvc.lock PIPELINE.md -m '[update] dvc repro' || true
 
 ## check commit
 check_commit: lint
