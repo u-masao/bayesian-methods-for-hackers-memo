@@ -76,8 +76,8 @@ def plot_histogram(p_a_true, p_b_true, burned_trace):
 def main(**kwargs):
     p_a_true = 0.05
     p_b_true = 0.04
-    n_a = 15000
-    n_b = 7500
+    n_a = 1500
+    n_b = 750
 
     occurences_a = stats.bernoulli.rvs(p_a_true, size=n_a)
     occurences_b = stats.bernoulli.rvs(p_b_true, size=n_b)
