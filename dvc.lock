@@ -57,12 +57,12 @@ stages:
     cmd: poetry run python -m src.chapter02.ab_testing
     deps:
     - path: src/chapter02/ab_testing.py
-      md5: ce37705d5169a6f81cecc7f69d3381a7
-      size: 1400
+      md5: c32e899e7f79adb2cb0db7d70e967de9
+      size: 1574
     outs:
     - path: reports/figures/chapter02/
-      md5: 2d10ee016fa7688a9941ef9db1f2c6c4.dir
-      size: 17215
+      md5: e75ad97d154ce1e8bfca1a108c90775b.dir
+      size: 21499
       nfiles: 1
   chap01_sampling:
     cmd: poetry run python -m src.chapter01.sampling data/raw/dataset.csv data/interim/trace_and_model.pickle
