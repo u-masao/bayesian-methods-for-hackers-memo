@@ -77,11 +77,29 @@ def plot_histogram_overlap(ax, p_a_true, p_b_true, burned_trace):
     ax.grid()
 
 
-def plot_histogram(p_a_true, p_b_true, burned_trace):
+def plot_histogram(p_a_true, p_b_true, trace):
     fig, axes = plt.subplots(5, 1, figsize=(12, 8), sharex=True)
     axes = axes.flatten()
 
-    plot_histogram_overlap(axes[0], p_a_true, p_b_true, burned_trace)
+    plot_histogram_overlap(axes[0], p_a_true, p_b_true, trace)
+    plot_histogram_single(axes[1], p_a_true, trace["p_a"], value_name="$p_a$")
+    plot_histogram_single(axes[2], p_b_true, trace["p_b"], value_name="$p_b$")
+    plot_histogram_single(
+        axes[3],
+        p_b_true - p_a_true,
+        trace["p_b"] - trace["p_a"],
+        value_name="$p_b - p_a$",
+    )
+    plot_histogram_single(
+        axes[4],
+        (p_b_true - p_a_true) / p_a_true,
+        (trace["p_b"] - trace["p_a"]) / trace["p_a"],
+        value_name="$(p_b - p_a) / p_a$",
+    )
+
+    for ax in axes:
+        ax.legend()
+        ax.grid()
 
     fig.suptitle("$p_A$ と $p_B$ の事後分布と真の値")
     return fig
