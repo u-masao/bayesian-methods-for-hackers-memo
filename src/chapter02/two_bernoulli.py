@@ -78,7 +78,7 @@ def plot_histogram_overlap(ax, p_a_true, p_b_true, burned_trace):
 
 
 def plot_histogram(p_a_true, p_b_true, trace):
-    fig, axes = plt.subplots(5, 1, figsize=(12, 8), sharex=True)
+    fig, axes = plt.subplots(5, 1, figsize=(12, 8))
     axes = axes.flatten()
 
     plot_histogram_overlap(axes[0], p_a_true, p_b_true, trace)
