@@ -6,9 +6,8 @@ import japanize_matplotlib  # noqa: F401
 import matplotlib.pyplot as plt
 import numpy as np
 import pymc3 as pm
-import scipy.stats as stats
 
-from src.utils import plot_trace, save_trace_and_model, savefig
+from src.utils import load_trace_and_model, plot_trace, savefig
 
 
 def log_metrics(occurences, p_true, label):
@@ -105,35 +104,33 @@ def plot_histogram(p_a_true, p_b_true, trace):
     return fig
 
 
+def load_theta(filepath):
+    theta = np.load(filepath)
+    p_a_true = theta["p_a_true"]
+    p_b_true = theta["p_b_true"]
+    n_a = theta["n_a"]
+    n_b = theta["n_b"]
+    return p_a_true, p_b_true, n_a, n_b
+
+
 @click.command()
+@click.argument("model_filepath", type=click.Path(exists=True))
+@click.argument("theta_filepath", type=click.Path(exists=True))
 @click.option(
     "--figure_dir", type=click.Path(), default="reports/figures/chapter02/"
 )
-@click.option(
-    "--model_output_filepath",
-    type=click.Path(),
-    default="models/chapter02/two_bernoulli.pickle",
-)
 def main(**kwargs):
-    p_a_true = 0.05
-    p_b_true = 0.04
-    n_a = 1500
-    n_b = 750
+    # load model, trace, theta
+    trace, model = load_trace_and_model(kwargs["model_filepath"])
+    p_a_true, p_b_true, n_a, n_b = load_theta(kwargs["theta_filepath"])
 
-    occurences_a = stats.bernoulli.rvs(p_a_true, size=n_a)
-    occurences_b = stats.bernoulli.rvs(p_b_true, size=n_b)
-
-    log_metrics(occurences_a, p_a_true, "a")
-    log_metrics(occurences_a, p_a_true, "a")
-    log_metrics(occurences_b, p_b_true, "b")
-
-    trace, model = sampling(occurences_a, occurences_b)
-    save_trace_and_model(trace, model, kwargs["model_output_filepath"])
+    # plot trace
     savefig(
         plot_trace(trace, model),
         Path(kwargs["figure_dir"]) / "trace.png",
     )
 
+    # plot histogram
     savefig(
         plot_histogram(
             p_a_true,
