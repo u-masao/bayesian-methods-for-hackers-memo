@@ -26,7 +26,7 @@ def log_metrics(occurences, p_true, label):
         "(mean - p_true) / p_true:": (np.mean(occurences) - p_true) / p_true,
     }
 
-    logger.info(f"{label} metrics: \n{metrics}")
+    logger.info(f"{label} 観測値と真の値: \n{metrics}")
 
 
 def plot_histogram_single(
@@ -36,12 +36,12 @@ def plot_histogram_single(
         n_colors = 12
         color = get_color(int(np.random.rand() * n_colors), n_colors)
     ci_low, ci_high = calc_credible_intervals(sample, hdi_prob=hdi_prob)
-    ax.set_title(f"histogram of {value_name}")
+    ax.set_title(f"{value_name} の分布")
     n, _, _ = ax.hist(
         sample,
         bins=25,
         density=True,
-        label=f"{value_name} dist.",
+        label=f"{value_name} の分布",
         alpha=0.5,
         color=color,
     )
@@ -50,7 +50,7 @@ def plot_histogram_single(
         0,
         np.max(n) * 1.2,
         linestyle="--",
-        label=f"true {value_name} (unknown)",
+        label=f"{value_name} の真の値",
         colors=[color],
         alpha=0.9,
     )
@@ -61,18 +61,27 @@ def plot_histogram_single(
         linestyle="-",
         label=f"{hdi_prob * 100:0.0f} 確信区間 {value_name}",
         colors=[color],
-        alpha=0.9,
+        alpha=0.7,
     )
 
 
 def plot_histogram_overlap(ax, p_a_true, p_b_true, burned_trace):
+    n_colors = 2
     plot_histogram_single(
-        ax, p_a_true, burned_trace["p_a"], value_name="$p_a$"
+        ax,
+        p_a_true,
+        burned_trace["p_a"],
+        value_name="$p_a$",
+        color=get_color(0, n_colors),
     )
     plot_histogram_single(
-        ax, p_b_true, burned_trace["p_b"], value_name="$p_b$"
+        ax,
+        p_b_true,
+        burned_trace["p_b"],
+        value_name="$p_b$",
+        color=get_color(1, n_colors),
     )
-    ax.set_title("histogram of $p_a$ and $p_b$")
+    ax.set_title("$p_a$ と $p_b$ のヒストグラム")
 
 
 def plot_histogram(p_a_true, p_b_true, trace):
