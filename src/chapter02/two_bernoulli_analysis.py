@@ -43,6 +43,7 @@ def plot_histogram_overlap(ax, p_a_true, p_b_true, burned_trace):
     plot_histogram_single(
         ax, p_b_true, burned_trace["p_b"], value_name="$p_b$"
     )
+    ax.set_title("histogram of $p_a$ and $p_b$")
 
 
 def plot_histogram(p_a_true, p_b_true, trace):
