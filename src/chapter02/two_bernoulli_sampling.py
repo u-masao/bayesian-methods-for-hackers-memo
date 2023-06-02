@@ -10,19 +10,6 @@ import scipy.stats as stats
 from src.utils import save_trace_and_model
 
 
-def log_metrics(occurences, p_true, label):
-    logger = logging.getLogger(__name__)
-    metrics = {
-        "occurrence": occurences,
-        "sum": np.sum(occurences),
-        "mean": np.mean(occurences),
-        "mean - p_true:": np.mean(occurences) - p_true,
-        "(mean - p_true) / p_true:": (np.mean(occurences) - p_true) / p_true,
-    }
-
-    logger.info(f"{label} metrics: \n{metrics}")
-
-
 def sampling(occurences_a, occurences_b):
     model = pm.Model()
     with model:
@@ -126,14 +113,10 @@ def main(**kwargs):
     occurences_a = stats.bernoulli.rvs(p_a_true, size=n_a)
     occurences_b = stats.bernoulli.rvs(p_b_true, size=n_b)
 
-    # ログ出力
-    log_metrics(occurences_a, p_a_true, "a")
-    log_metrics(occurences_b, p_b_true, "b")
-
     # sampling
     trace, model = sampling(occurences_a, occurences_b)
 
-    # save model, trace, theta
+    # save model, trace, theta, observed
     save_trace_and_model(trace, model, kwargs["model_output_filepath"])
     np.savez(
         kwargs["theta_filepath"],
@@ -141,6 +124,8 @@ def main(**kwargs):
         p_b_true=p_b_true,
         n_a=n_a,
         n_b=n_b,
+        occurences_a=occurences_a,
+        occurences_b=occurences_b,
     )
 
 
