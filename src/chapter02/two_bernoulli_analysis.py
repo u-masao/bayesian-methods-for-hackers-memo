@@ -54,10 +54,9 @@ def plot_histogram_single(
         colors=[color],
         alpha=0.9,
     )
-    ax.hlines(
+    ax.plot(
+        [ci_low, ci_high],
         np.max(n) * (0.1 + 0.1 * np.random.rand()),
-        ci_low,
-        ci_high,
         linestyle="-",
         label=f"{hdi_prob * 100:0.0f} 確信区間 {value_name}",
         colors=[color],
