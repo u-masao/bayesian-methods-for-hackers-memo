@@ -42,7 +42,7 @@ def plot_histogram_single(
         bins=25,
         density=True,
         label=f"{value_name} の分布",
-        alpha=0.5,
+        alpha=0.4,
         color=color,
     )
     ax.vlines(
@@ -52,16 +52,16 @@ def plot_histogram_single(
         linestyle="--",
         label=f"{value_name} の真の値",
         colors=[color],
-        alpha=0.9,
+        alpha=0.5,
     )
     ax.plot(
-        [ci_low, ci_high],
-        np.max(n) * (0.1 + 0.1 * np.random.rand()),
+        [ci_low, p_true, ci_high],
+        [np.max(n) * (0.1 + 0.1 * np.random.rand())] * 3,
         linestyle="-",
         label=f"{hdi_prob * 100:0.0f} 確信区間 {value_name}",
         colors=[color],
-        alpha=0.7,
-        marker="|",
+        alpha=0.9,
+        marker="x",
     )
 
 
