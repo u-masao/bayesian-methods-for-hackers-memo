@@ -6,14 +6,36 @@ import japanize_matplotlib  # noqa: F401
 import matplotlib.pyplot as plt
 import numpy as np
 
-from src.utils import get_color, load_trace_and_model, plot_trace, savefig
+from src.utils import (
+    calc_credible_intervals,
+    get_color,
+    load_trace_and_model,
+    plot_trace,
+    savefig,
+)
 
 
-def plot_histogram_single(ax, p_true, sample, value_name="", color=None):
+def log_metrics(occurences, p_true, label):
+    logger = logging.getLogger(__name__)
+    metrics = {
+        "occurrence": occurences,
+        "len": len(occurences),
+        "sum": np.sum(occurences),
+        "mean": np.mean(occurences),
+        "mean - p_true:": np.mean(occurences) - p_true,
+        "(mean - p_true) / p_true:": (np.mean(occurences) - p_true) / p_true,
+    }
+
+    logger.info(f"{label} metrics: \n{metrics}")
+
+
+def plot_histogram_single(
+    ax, p_true, sample, value_name="", color=None, hdi_prob=0.95
+):
     if color is None:
         n_colors = 12
         color = get_color(int(np.random.rand() * n_colors), n_colors)
-
+    ci_low, ci_high = calc_credible_intervals(sample, hdi_prob=hdi_prob)
     ax.set_title(f"histogram of {value_name}")
     n, _, _ = ax.hist(
         sample,
@@ -29,6 +51,15 @@ def plot_histogram_single(ax, p_true, sample, value_name="", color=None):
         np.max(n) * 1.2,
         linestyle="--",
         label=f"true {value_name} (unknown)",
+        colors=[color],
+        alpha=0.9,
+    )
+    ax.hlines(
+        ci_low,
+        ci_high,
+        np.max(n) * 0.2,
+        linestyle="--",
+        label=f"{hdi_prob * 100:0.0f} 確信区間 {value_name}",
         colors=[color],
         alpha=0.9,
     )
@@ -85,7 +116,22 @@ def load_theta(filepath):
     p_b_true = theta["p_b_true"]
     n_a = theta["n_a"]
     n_b = theta["n_b"]
-    return p_a_true, p_b_true, n_a, n_b
+    occurences_a = theta["occurences_a"]
+    occurences_b = theta["occurences_b"]
+    return p_a_true, p_b_true, n_a, n_b, occurences_a, occurences_b
+
+
+def calc_prob_for_dicision(trace, model):
+    # a の 95% 確信区間
+    p_a_ci_low, p_a_ci_high = calc_credible_intervals(trace["p_a"])
+    # a の 95% 確信区間
+    pass
+
+
+def calc_compare_trueth_and_prob(
+    trace, model, p_a_true, p_b_true, occurences_a, occurences_b
+):
+    pass
 
 
 @click.command()
@@ -97,7 +143,9 @@ def load_theta(filepath):
 def main(**kwargs):
     # load model, trace, theta
     trace, model = load_trace_and_model(kwargs["model_filepath"])
-    p_a_true, p_b_true, n_a, n_b = load_theta(kwargs["theta_filepath"])
+    p_a_true, p_b_true, n_a, n_b, occurences_a, occurences_b = load_theta(
+        kwargs["theta_filepath"]
+    )
 
     # plot trace
     savefig(
@@ -113,6 +161,16 @@ def main(**kwargs):
             trace,
         ),
         Path(kwargs["figure_dir"]) / "bernoulli.png",
+    )
+
+    # ログ出力
+    log_metrics(occurences_a, p_a_true, "a")
+    log_metrics(occurences_b, p_b_true, "b")
+
+    # 意思決定に利用する確率などの計算
+    calc_prob_for_dicision(trace, model)
+    calc_compare_trueth_and_prob(
+        trace, model, p_a_true, p_b_true, occurences_a, occurences_b
     )
 
 
