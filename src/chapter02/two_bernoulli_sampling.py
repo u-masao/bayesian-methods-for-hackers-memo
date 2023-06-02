@@ -102,8 +102,8 @@ def plot_histogram(p_a_true, p_b_true, trace):
     type=click.Path(),
     default="models/chapter02/two_bernoulli_theta.npz",
 )
-@click.option("--p_a_true", type=float, default="0.05")
-@click.option("--p_b_true", type=float, default="0.04")
+@click.option("--p_a_true", type=float, default="0.04")
+@click.option("--p_b_true", type=float, default="0.05")
 @click.option("--n_a", type=int, default=1500)
 @click.option("--n_b", type=int, default=750)
 def main(**kwargs):
