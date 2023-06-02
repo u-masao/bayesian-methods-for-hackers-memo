@@ -62,6 +62,7 @@ def plot_histogram_single(
         label=f"{hdi_prob * 100:0.0f} 確信区間 {value_name}",
         colors=[color],
         alpha=0.7,
+        marker="|",
     )
 
 
