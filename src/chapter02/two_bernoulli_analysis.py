@@ -5,7 +5,6 @@ import click
 import japanize_matplotlib  # noqa: F401
 import matplotlib.pyplot as plt
 import numpy as np
-import pymc3 as pm
 
 from src.utils import load_trace_and_model, plot_trace, savefig
 
