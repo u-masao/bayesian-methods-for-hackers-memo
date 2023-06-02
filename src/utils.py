@@ -2,7 +2,12 @@ import os
 import pickle
 from pathlib import Path
 
+import matplotlib.pyplot as plt
 import pymc3 as pm
+
+
+def get_color(i: int, n: int = 20, name: str = "brg"):
+    return plt.cm.get_cmap(name, n)(i)
 
 
 def plot_trace(trace, model):

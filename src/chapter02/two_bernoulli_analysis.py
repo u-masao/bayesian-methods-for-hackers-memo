@@ -6,16 +6,14 @@ import japanize_matplotlib  # noqa: F401
 import matplotlib.pyplot as plt
 import numpy as np
 
-from src.utils import load_trace_and_model, plot_trace, savefig
+from src.utils import get_color, load_trace_and_model, plot_trace, savefig
 
 
-def get_color(i, n, name="brg"):
-    return plt.cm.get_cmap(name, n)(i)
+def plot_histogram_single(ax, p_true, sample, value_name="", color=None):
+    if color is None:
+        n_colors = 12
+        color = get_color(int(np.random.rand() * n_colors), n_colors)
 
-
-def plot_histogram_single(ax, p_true, sample, value_name="", color="green"):
-    n_colors = 12
-    color = get_color(int(np.random.rand() * n_colors), n_colors)
     ax.set_title(f"histogram of {value_name}")
     n, _, _ = ax.hist(
         sample,
@@ -67,7 +65,7 @@ def plot_histogram(p_a_true, p_b_true, trace):
         value_name="$(p_b - p_a) / p_a$",
     )
 
-    #
+    # 軸を一致
     axes[1].sharex(axes[0])
     axes[2].sharex(axes[0])
 
