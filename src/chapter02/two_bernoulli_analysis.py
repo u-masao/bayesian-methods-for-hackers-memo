@@ -10,34 +10,6 @@ import pymc3 as pm
 from src.utils import load_trace_and_model, plot_trace, savefig
 
 
-def log_metrics(occurences, p_true, label):
-    logger = logging.getLogger(__name__)
-    metrics = {
-        "occurrence": occurences,
-        "sum": np.sum(occurences),
-        "mean": np.mean(occurences),
-        "mean - p_true:": np.mean(occurences) - p_true,
-        "(mean - p_true) / p_true:": (np.mean(occurences) - p_true) / p_true,
-    }
-
-    logger.info(f"{label} metrics: \n{metrics}")
-
-
-def sampling(occurences_a, occurences_b):
-    model = pm.Model()
-    with model:
-        p_a = pm.Uniform("p_a", 0, 1)
-        p_b = pm.Uniform("p_b", 0, 1)
-        delta = pm.Deterministic("delta", p_a - p_b)  # noqa: F841
-        obs_a = pm.Bernoulli("obs_a", p_a, observed=occurences_a)  # noqa: F841
-        obs_b = pm.Bernoulli("obs_b", p_b, observed=occurences_b)  # noqa: F841
-        step = pm.Metropolis()
-        trace = pm.sample(20000, step=step)
-        burned_trace = trace[1000:]
-
-    return burned_trace, model
-
-
 def get_color(i, n, name="hsv"):
     return plt.cm.get_cmap(name, n)(i)
 
@@ -60,7 +32,7 @@ def plot_histogram_single(ax, p_true, sample, value_name="", color="green"):
         bins=25,
         density=True,
         label=f"{value_name} dist.",
-        alpha=0.7,
+        alpha=0.5,
         color=color,
     )
 
@@ -101,6 +73,7 @@ def plot_histogram(p_a_true, p_b_true, trace):
         ax.grid()
 
     fig.suptitle("$p_A$ と $p_B$ の事後分布と真の値")
+    fig.tight_layout()
     return fig
 
 
