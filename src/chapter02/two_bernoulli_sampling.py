@@ -102,12 +102,16 @@ def plot_histogram(p_a_true, p_b_true, trace):
     type=click.Path(),
     default="models/chapter02/two_bernoulli_theta.npz",
 )
+@click.option("--p_a_true", type=float, default="0.05")
+@click.option("--p_b_true", type=float, default="0.04")
+@click.option("--n_a", type=int, default=1500)
+@click.option("--n_b", type=int, default=750)
 def main(**kwargs):
     # 初期値を設定
-    p_a_true = 0.05
-    p_b_true = 0.04
-    n_a = 1500
-    n_b = 750
+    p_a_true = kwargs["p_a_true"]
+    p_b_true = kwargs["p_b_true"]
+    n_a = kwargs["n_a"]
+    n_b = kwargs["n_b"]
 
     # 観測データを生成
     occurences_a = stats.bernoulli.rvs(p_a_true, size=n_a)
