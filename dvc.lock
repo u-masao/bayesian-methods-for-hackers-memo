@@ -159,15 +159,15 @@ stages:
       md5: 5ada1da9561a1eb77762ca058910e5d2
       size: 1026
     - path: src/chapter02/two_bernoulli_analysis.py
-      md5: 02809a10de6006d20ca3f00b817c2486
-      size: 3071
+      md5: 16f0f0503aaa61be853e63536aa9299f
+      size: 3120
     - path: src/utils.py
       md5: 35786e8e469996ec09b518de1d2c4e72
       size: 1019
     outs:
     - path: reports/figures/chapter02/two/bernoulli.png
-      md5: 9de682247fd68907aaa544087ab7bcdb
-      size: 70924
+      md5: c9fdf68ca3014ef7c47030546145be35
+      size: 71475
     - path: reports/figures/chapter02/two/trace.png
       md5: 6913feb72a2f7d5a32aebc88563b5f85
       size: 145407
