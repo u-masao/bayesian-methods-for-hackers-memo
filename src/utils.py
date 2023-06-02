@@ -14,10 +14,10 @@ def get_color(i: int, n: int = 20, name: str = "brg"):
 def calc_credible_intervals(data, hdi_prob=0.95):
     assert hdi_prob <= 1.0
     assert hdi_prob >= 0.0
-    low_prob = (0.5 - hdi_prob / 2.0) * 100.0
-    high_prob = (0.5 + hdi_prob / 2.0) * 100.0
-
-    return np.percentile(data, q=[low_prob, high_prob])
+    prob_low = (0.5 - hdi_prob / 2.0) * 100.0
+    prob_high = (0.5 + hdi_prob / 2.0) * 100.0
+    ci_low, ci_high = np.percentile(data, q=[prob_low, prob_high])
+    return ci_low, ci_high
 
 
 def plot_trace(trace, model):
