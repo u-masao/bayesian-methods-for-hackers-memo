@@ -1,4 +1,4 @@
-.PHONY: chapter01
+.PHONY:
 
 ## dvc repro
 repro: check_commit
