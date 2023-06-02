@@ -75,18 +75,18 @@ stages:
       md5: dfcc1fb3b22f3e0c9bc828bf1817dda7
       size: 2158
     - path: src/utils.py
-      md5: a4184b65279ccdd152ab5856708ad4cd
-      size: 1147
+      md5: 620a95323eb2304435d7de9c4b7c4ba8
+      size: 1422
     outs:
     - path: data/interim/trace_and_model.pickle
-      md5: 7b6503a1f91085698043258ea6dcdeb0
+      md5: bdb9515bc5e287d1a802b8782bef1b93
       size: 2667532
   chap01_analysis:
     cmd: poetry run python -m src.chapter01.analysis data/raw/dataset.csv data/interim/trace_and_model.pickle
       reports/figures/chapter01/ data/processed/trace_summary.csv
     deps:
     - path: data/interim/trace_and_model.pickle
-      md5: 7b6503a1f91085698043258ea6dcdeb0
+      md5: bdb9515bc5e287d1a802b8782bef1b93
       size: 2667532
     - path: data/raw/dataset.csv
       md5: 1a53f0e394e74914659007cc5f153b9f
@@ -95,15 +95,15 @@ stages:
       md5: b3f9aa85f5e8fb2fb2fc21f59c1a8dac
       size: 4704
     - path: src/utils.py
-      md5: a4184b65279ccdd152ab5856708ad4cd
-      size: 1147
+      md5: 620a95323eb2304435d7de9c4b7c4ba8
+      size: 1422
     outs:
     - path: data/processed/trace_summary.csv
-      md5: e32145525e8c9bf9f17b47a543901051
-      size: 255
+      md5: a1a87b1dc981df1257e020976ccd0e83
+      size: 254
     - path: reports/figures/chapter01/
-      md5: 93cb579d338d07debf36c353a094c41a.dir
-      size: 249396
+      md5: f199dab7d7ad5bce0a1c6899645ce7be.dir
+      size: 251508
       nfiles: 4
   chap02_one_bernoulli:
     cmd: poetry run python -m src.chapter02.one_bernoulli --figure_dir reports/figures/chapter02/one/
@@ -112,12 +112,12 @@ stages:
       md5: 10f887169081cf88af90da4264f22234
       size: 1887
     - path: src/utils.py
-      md5: a4184b65279ccdd152ab5856708ad4cd
-      size: 1147
+      md5: 620a95323eb2304435d7de9c4b7c4ba8
+      size: 1422
     outs:
     - path: reports/figures/chapter02/one/bernoulli.png
-      md5: bb757fcfd6b662a5e4936fbc88206fde
-      size: 21975
+      md5: 7722d9d31f52500f010e4a36f84863e8
+      size: 22117
   chap02_two_bernoulli:
     cmd: poetry run python -m src.chapter02.two_bernoulli --figure_dir reports/figures/chapter02/two/
     deps:
@@ -136,38 +136,38 @@ stages:
       models/chapter02/two_bernoulli.pickle --theta_filepath models/chapter02/two_bernoulli_theta.npz
     deps:
     - path: src/chapter02/two_bernoulli_sampling.py
-      md5: 6a817144c5505cc3d8b0fb72a442b6d7
-      size: 3986
+      md5: 32d404e515796a80d566a9b2ef1bbdeb
+      size: 3557
     - path: src/utils.py
-      md5: a4184b65279ccdd152ab5856708ad4cd
-      size: 1147
+      md5: 620a95323eb2304435d7de9c4b7c4ba8
+      size: 1422
     outs:
     - path: models/chapter02/two_bernoulli.pickle
-      md5: 3e2ce7f6722e1f8b3dd43c7f3f62c540
+      md5: 7c0643eb3976b57600c25c94737129be
       size: 4077075
     - path: models/chapter02/two_bernoulli_theta.npz
-      md5: 5ada1da9561a1eb77762ca058910e5d2
-      size: 1026
+      md5: 1e432a98d8802ede43f8cf9ab46c2f63
+      size: 19538
   chap02_two_bernoulli_analysis:
     cmd: poetry run python -m src.chapter02.two_bernoulli_analysis models/chapter02/two_bernoulli.pickle
       models/chapter02/two_bernoulli_theta.npz --figure_dir reports/figures/chapter02/two/
     deps:
     - path: models/chapter02/two_bernoulli.pickle
-      md5: 3e2ce7f6722e1f8b3dd43c7f3f62c540
+      md5: 7c0643eb3976b57600c25c94737129be
       size: 4077075
     - path: models/chapter02/two_bernoulli_theta.npz
-      md5: 5ada1da9561a1eb77762ca058910e5d2
-      size: 1026
+      md5: 1e432a98d8802ede43f8cf9ab46c2f63
+      size: 19538
     - path: src/chapter02/two_bernoulli_analysis.py
-      md5: b8c8f087db50fb8cefadfb3163f93a0f
-      size: 3216
+      md5: f5532ca365f487e37b7c122bb70bf986
+      size: 4762
     - path: src/utils.py
-      md5: a4184b65279ccdd152ab5856708ad4cd
-      size: 1147
+      md5: 620a95323eb2304435d7de9c4b7c4ba8
+      size: 1422
     outs:
     - path: reports/figures/chapter02/two/bernoulli.png
-      md5: ab8e19f8f75ffff54d6b3d648d9831a2
-      size: 66203
+      md5: cd34808253c9197aab60eeac37783378
+      size: 79741
     - path: reports/figures/chapter02/two/trace.png
-      md5: ff944d68d3ade9568216443dff236069
-      size: 149655
+      md5: 195fbdb45257442c899d46e521604e56
+      size: 147155
