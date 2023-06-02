@@ -17,22 +17,22 @@ def plot_histogram_single(ax, p_true, sample, value_name="", color="green"):
     n_colors = 12
     color = get_color(int(np.random.rand() * n_colors), n_colors)
     ax.set_title(f"histogram of {value_name}")
-    ax.vlines(
-        p_true,
-        0,
-        90,
-        linestyle="--",
-        label=f"true {value_name} (unknown)",
-        colors=[color],
-        alpha=0.7,
-    )
-    ax.hist(
+    n, _, _ = ax.hist(
         sample,
         bins=25,
         density=True,
         label=f"{value_name} dist.",
         alpha=0.5,
         color=color,
+    )
+    ax.vlines(
+        p_true,
+        0,
+        np.max(n) * 1.2,
+        linestyle="--",
+        label=f"true {value_name} (unknown)",
+        colors=[color],
+        alpha=0.7,
     )
 
 
