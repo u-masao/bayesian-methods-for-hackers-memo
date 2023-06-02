@@ -33,7 +33,7 @@ def plot_histogram_single(
 ):
     # 描画色を指定
     if color is None:
-        color = plt.get_cmap("tab10")(int(np.random.rand() * 10))
+        color = plt.get_cmap("Dark2")(int(np.random.rand() * 10))
 
     # 確信区間を計算
     ci_low, ci_high = calc_credible_intervals(sample, hdi_prob=hdi_prob)
@@ -76,21 +76,21 @@ def plot_histogram_overlap(ax, p_a_true, p_b_true, burned_trace):
         p_a_true,
         burned_trace["p_a"],
         value_name="$p_a$",
-        color=plt.get_cmap("tab10")(0),
+        color=plt.get_cmap("Dark2")(0),
     )
     plot_histogram_single(
         ax,
         p_b_true,
         burned_trace["p_b"],
         value_name="$p_b$",
-        color=plt.get_cmap("tab10")(1),
+        color=plt.get_cmap("Dark2")(1),
     )
     ax.set_title("$p_a$ と $p_b$ のヒストグラム")
 
 
 def plot_histogram(p_a_true, p_b_true, trace):
     """plot histogram"""
-    fig, axes = plt.subplots(5, 1, figsize=(6, 8))
+    fig, axes = plt.subplots(5, 1, figsize=(8, 12))
     axes = axes.flatten()
 
     plot_histogram_overlap(axes[0], p_a_true, p_b_true, trace)
