@@ -9,7 +9,7 @@ import numpy as np
 from src.utils import load_trace_and_model, plot_trace, savefig
 
 
-def get_color(i, n, name="hsv"):
+def get_color(i, n, name="brg"):
     return plt.cm.get_cmap(name, n)(i)
 
 
@@ -32,7 +32,7 @@ def plot_histogram_single(ax, p_true, sample, value_name="", color="green"):
         linestyle="--",
         label=f"true {value_name} (unknown)",
         colors=[color],
-        alpha=0.7,
+        alpha=0.9,
     )
 
 
@@ -43,8 +43,6 @@ def plot_histogram_overlap(ax, p_a_true, p_b_true, burned_trace):
     plot_histogram_single(
         ax, p_b_true, burned_trace["p_b"], value_name="$p_b$"
     )
-    ax.legend()
-    ax.grid()
 
 
 def plot_histogram(p_a_true, p_b_true, trace):
