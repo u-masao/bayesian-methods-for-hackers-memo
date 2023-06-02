@@ -3,11 +3,21 @@ import pickle
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+import numpy as np
 import pymc3 as pm
 
 
 def get_color(i: int, n: int = 20, name: str = "brg"):
     return plt.cm.get_cmap(name, n)(i)
+
+
+def calc_credible_intervals(data, hdi_prob=0.95):
+    assert hdi_prob <= 1.0
+    assert hdi_prob >= 0.0
+    low_prob = (0.5 - hdi_prob / 2.0) * 100.0
+    high_prob = (0.5 + hdi_prob / 2.0) * 100.0
+
+    return np.percentile(data, q=[low_prob, high_prob])
 
 
 def plot_trace(trace, model):
