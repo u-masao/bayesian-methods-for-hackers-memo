@@ -8,7 +8,6 @@ import numpy as np
 
 from src.utils import (
     calc_credible_intervals,
-    get_color,
     load_trace_and_model,
     plot_trace,
     savefig,
@@ -32,11 +31,17 @@ def log_metrics(occurences, p_true, label):
 def plot_histogram_single(
     ax, p_true, sample, value_name="", color=None, hdi_prob=0.95
 ):
+    # 描画色を指定
     if color is None:
-        n_colors = 12
-        color = get_color(int(np.random.rand() * n_colors), n_colors)
+        color = plt.get_cmap("tab10")(int(np.random.rand() * 10))
+
+    # 確信区間を計算
     ci_low, ci_high = calc_credible_intervals(sample, hdi_prob=hdi_prob)
+
+    # タイトルを指定
     ax.set_title(f"{value_name} の分布")
+
+    # plot
     n, _, _ = ax.hist(
         sample,
         bins=25,
@@ -55,8 +60,8 @@ def plot_histogram_single(
         alpha=0.5,
     )
     ax.plot(
-        [ci_low, p_true, ci_high],
-        [np.max(n) * (0.1 + 0.1 * np.random.rand())] * 3,
+        [ci_low, ci_high],
+        [np.max(n) * (0.1 + 0.2 * np.random.rand())] * 2,
         linestyle="-",
         label=f"{hdi_prob * 100:0.0f} 確信区間 {value_name}",
         color=color,
@@ -66,20 +71,19 @@ def plot_histogram_single(
 
 
 def plot_histogram_overlap(ax, p_a_true, p_b_true, burned_trace):
-    n_colors = 2
     plot_histogram_single(
         ax,
         p_a_true,
         burned_trace["p_a"],
         value_name="$p_a$",
-        color=get_color(0, n_colors),
+        color=plt.get_cmap("tab10")(0),
     )
     plot_histogram_single(
         ax,
         p_b_true,
         burned_trace["p_b"],
         value_name="$p_b$",
-        color=get_color(1, n_colors),
+        color=plt.get_cmap("tab10")(1),
     )
     ax.set_title("$p_a$ と $p_b$ のヒストグラム")
 

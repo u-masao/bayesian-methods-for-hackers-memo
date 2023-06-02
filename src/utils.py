@@ -2,13 +2,8 @@ import os
 import pickle
 from pathlib import Path
 
-import matplotlib.pyplot as plt
 import numpy as np
 import pymc3 as pm
-
-
-def get_color(i: int, n: int = 20, name: str = "brg"):
-    return plt.cm.get_cmap(name, n)(i)
 
 
 def calc_credible_intervals(data, hdi_prob=0.95):
