@@ -7,5 +7,7 @@ flowchart TD
 	node2-->node3
 	node3-->node1
 	node4["chap02_one_bernoulli"]
-	node5["chap02_two_bernoulli"]
+	node5["chap02_two_bernoulli_analysis"]
+	node6["chap02_two_bernoulli_sampling"]
+	node6-->node5
 ```
