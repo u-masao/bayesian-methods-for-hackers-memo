@@ -59,7 +59,7 @@ def plot_histogram_single(
         [np.max(n) * (0.1 + 0.1 * np.random.rand())] * 3,
         linestyle="-",
         label=f"{hdi_prob * 100:0.0f} 確信区間 {value_name}",
-        colors=[color],
+        color=color,
         alpha=0.9,
         marker="x",
     )
