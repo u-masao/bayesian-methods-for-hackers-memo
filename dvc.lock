@@ -139,14 +139,14 @@ stages:
       md5: 32d404e515796a80d566a9b2ef1bbdeb
       size: 3557
     - path: src/utils.py
-      md5: 620a95323eb2304435d7de9c4b7c4ba8
-      size: 1422
+      md5: e4094e437cab7d4d31dcfc985392088c
+      size: 1565
     outs:
     - path: models/chapter02/two_bernoulli.pickle
-      md5: 7c0643eb3976b57600c25c94737129be
+      md5: d889b541d9acd83251a565bfcb478ec0
       size: 4077075
     - path: models/chapter02/two_bernoulli_theta.npz
-      md5: 1e432a98d8802ede43f8cf9ab46c2f63
+      md5: 04c18138ade32f1750cd4df387cdb853
       size: 19538
   chap02_two_bernoulli_analysis:
     cmd: poetry run python -m src.chapter02.two_bernoulli_analysis models/chapter02/two_bernoulli.pickle
