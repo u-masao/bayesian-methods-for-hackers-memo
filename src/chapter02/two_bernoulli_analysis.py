@@ -82,15 +82,18 @@ def plot_histogram_single(
         colors=[color],
         alpha=0.5,
     )
+    ci_bar_y = np.max(n) * (0.1 + 0.2 * np.random.rand())
     ax.plot(
         [ci_low, ci_high],
-        [np.max(n) * (0.1 + 0.2 * np.random.rand())] * 2,
+        [ci_bar_y] * 2,
         linestyle="-",
         label=f"{hdi_prob * 100:0.0f} 確信区間 {value_name}",
         color=color,
         alpha=0.9,
         marker="x",
     )
+    ax.annotate("ci low", xy=(ci_low, ci_bar_y))
+    ax.annotate("ci high", xy=(ci_high, ci_bar_y))
 
 
 def plot_histogram_overlap(
