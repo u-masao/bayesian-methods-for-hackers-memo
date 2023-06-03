@@ -220,17 +220,22 @@ def calc_prob_dist(samples, hdi_prob=0.95, divide=100):
 def calc_prob_for_dicision(
     trace, model, p_a_true, p_b_true, occurences_a, occurences_b, hdi_prob=0.95
 ):
+    # 評価対象を作成
     p_a = trace["p_a"]
     p_b = trace["p_b"]
     p_diff = p_b - p_a
     p_ratio = p_diff / p_a
-    ci = calc_ci(p_a, p_b, hdi_prob=hdi_prob)
 
     # 差と確率
-    prob_diff_df = calc_prob_dist(p_diff)
-    prob_ratio_df = calc_prob_dist(p_ratio)
-
-    return ci, prob_diff_df, prob_ratio_df
+    results = []
+    for value, name in [
+        [p_a, "p_a"],
+        [p_b, "p_b"],
+        [p_diff, "p_diff"],
+        [p_ratio, "p_ratio"],
+    ]:
+        results.append(calc_prob_dist(value).assign(name=name))
+    return pd.concat(results)
 
 
 @click.command()
@@ -251,14 +256,17 @@ def main(**kwargs):
     metrics["obs_a"] = log_observation_summary(occurences_a, p_a_true, "a")
     metrics["obs_b"] = log_observation_summary(occurences_b, p_b_true, "b")
 
+    # 確信区間を計算
+    hdi_prob = 0.95
+    ci = calc_ci(trace["p_a"], trace["p_b"], hdi_prob=hdi_prob)
+    metrics = metrics.update(ci)
+    pd.DataFrame(metrics).to_csv("data/processed/metrics.csv")
+
     # 意思決定に利用する確率などの計算
-    ci, prob_diff_df, prob_ratio_df = calc_prob_for_dicision(
+    prob_summary_df = calc_prob_for_dicision(
         trace, model, p_a_true, p_b_true, occurences_a, occurences_b
     )
-    metrics = metrics.update(ci)
-    pd.DataFrame(ci).to_csv("data/processed/metrics.csv")
-    prob_diff_df.to_csv("data/processed/prob_diff.csv")
-    prob_ratio_df.to_csv("data/processed/prob_ratio.csv")
+    prob_summary_df.to_csv("data/processed/prob_for_dicision.csv")
 
     # plot trace
     savefig(
