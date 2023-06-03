@@ -66,6 +66,7 @@ def plot_histogram_single(
         hist_args["cumulative"] = True
         hist_args["histtype"] = "step"
         hist_args["alpha"] = 0.9
+        hist_args["bins"] = 250
 
     # plot
     n, _, _ = ax.hist(sample, **hist_args)
