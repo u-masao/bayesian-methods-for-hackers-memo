@@ -306,7 +306,9 @@ def main(**kwargs):
     prob_summary_df = calc_prob_for_dicision(
         trace, model, p_a_true, p_b_true, observations_a, observations_b
     )
-    prob_summary_df.to_csv(Path(["csv_output_dir"]) / "prob_for_dicision.csv")
+    prob_summary_df.to_csv(
+        Path(kwargs["csv_output_dir"]) / "prob_for_dicision.csv"
+    )
 
     # plot trace
     savefig(
