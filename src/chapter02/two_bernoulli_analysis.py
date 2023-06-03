@@ -17,8 +17,9 @@ from src.utils import (
 
 def log_metrics(occurences, p_true, label):
     logger = logging.getLogger(__name__)
+    disp_length = np.min([20, len(occurences)])
     metrics = {
-        "occurrence": occurences,
+        "occurrence": occurences[:disp_length],
         "len": len(occurences),
         "sum": np.sum(occurences),
         "mean": np.mean(occurences),
