@@ -245,6 +245,10 @@ def calc_prob_for_dicision(
     "--figure_dir", type=click.Path(), default="reports/figures/chapter02/"
 )
 def main(**kwargs):
+    """
+    メイン処理
+    サンプリング結果を分析する
+    """
     # init log
     logger = logging.getLogger(__name__)
 
@@ -262,7 +266,7 @@ def main(**kwargs):
     # 確信区間を計算
     hdi_prob = 0.95
     ci = calc_ci(trace["p_a"], trace["p_b"], hdi_prob=hdi_prob)
-    metrics = metrics.update(ci)
+    metrics.update(ci)
     logger.info(f"metrics: {metrics}")
     pd.DataFrame(metrics).to_csv("data/processed/metrics.csv")
 
