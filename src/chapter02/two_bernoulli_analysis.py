@@ -36,7 +36,7 @@ def plot_histogram_single(
     value_name="",
     color=None,
     hdi_prob=0.95,
-    flag_cumulative=False,
+    cumulative=False,
 ):
     # 描画色を指定
     if color is None:
@@ -58,7 +58,7 @@ def plot_histogram_single(
     )
 
     # 累積分布関数を表示する際のオプションを指定
-    if flag_cumulative:
+    if cumulative:
         hist_args["cumulative"] = True
         hist_args["histtype"] = "step"
         hist_args["alpha"] = 0.9
