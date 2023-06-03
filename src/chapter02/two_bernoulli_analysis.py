@@ -94,13 +94,13 @@ def plot_histogram_single(
     )
     ax.annotate(
         f"{ci_low:0.3f}",
-        xy=(ci_low, ci_bar_y + 0.05),
+        xy=(ci_low, ci_bar_y + 0.05 * np.max(n)),
         ha="center",
         va="bottom",
     )
     ax.annotate(
         f"{ci_high:0.3f}",
-        xy=(ci_high, ci_bar_y) + 0.05,
+        xy=(ci_high, ci_bar_y + 0.05 * np.max(n)),
         ha="center",
         va="bottom",
     )
