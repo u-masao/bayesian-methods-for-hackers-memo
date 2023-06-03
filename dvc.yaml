@@ -43,29 +43,43 @@ stages:
     outs:
     - reports/figures/chapter02/one/bernoulli.png
   chap02_two_bernoulli_sampling:
-    cmd: >-
-      poetry run python -m src.chapter02.two_bernoulli_sampling
-      --model_output_filepath models/chapter02/two_bernoulli.pickle
-      --theta_filepath models/chapter02/two_bernoulli_theta.npz
-    deps:
-    - src/chapter02/two_bernoulli_sampling.py
-    - src/utils.py
-    outs:
-    - models/chapter02/two_bernoulli.pickle
-    - models/chapter02/two_bernoulli_theta.npz
+    foreach:
+      - index: 0
+      - index: 1
+      - index: 2
+      - index: 3
+      - index: 4
+    do:
+      cmd: >-
+        poetry run python -m src.chapter02.two_bernoulli_sampling
+        --model_output_filepath models/chapter02/two_bernoulli_${item.index}.pickle
+        --theta_filepath models/chapter02/two_bernoulli_theta_${item.index}.npz
+      deps:
+      - src/chapter02/two_bernoulli_sampling.py
+      - src/utils.py
+      outs:
+      - models/chapter02/two_bernoulli_${item.index}.pickle
+      - models/chapter02/two_bernoulli_theta_${item.index}.npz
   chap02_two_bernoulli_analysis:
-    cmd: >-
-      poetry run python -m src.chapter02.two_bernoulli_analysis
-      models/chapter02/two_bernoulli.pickle
-      models/chapter02/two_bernoulli_theta.npz
-      data/processed/chapter02/two/
-      --figure_dir reports/figures/chapter02/two/
-    deps:
-    - models/chapter02/two_bernoulli.pickle
-    - models/chapter02/two_bernoulli_theta.npz
-    - src/chapter02/two_bernoulli_analysis.py
-    - src/utils.py
-    outs:
-    - reports/figures/chapter02/two/bernoulli.png
-    - reports/figures/chapter02/two/trace.png
-    - data/processed/chapter02/two/
+    foreach:
+      - index: 0
+      - index: 1
+      - index: 2
+      - index: 3
+      - index: 4
+    do:
+      cmd: >-
+        poetry run python -m src.chapter02.two_bernoulli_analysis
+        models/chapter02/two_bernoulli_${item.index}.pickle
+        models/chapter02/two_bernoulli_theta_${item.index}.npz
+        data/processed/chapter02/two/${item.index}/
+        --figure_dir reports/figures/chapter02/two/${item.index}/
+      deps:
+      - models/chapter02/two_bernoulli_${item.index}.pickle
+      - models/chapter02/two_bernoulli_theta_${item.index}.npz
+      - src/chapter02/two_bernoulli_analysis.py
+      - src/utils.py
+      outs:
+      - reports/figures/chapter02/two/${item.index}/bernoulli.png
+      - reports/figures/chapter02/two/${item.index}/trace.png
+      - data/processed/chapter02/two/${item.index}/

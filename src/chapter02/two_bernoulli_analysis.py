@@ -1,4 +1,5 @@
 import logging
+import os
 from pathlib import Path
 
 import click
@@ -274,6 +275,10 @@ def main(**kwargs):
     """
     # init log
     logger = logging.getLogger(__name__)
+
+    # make dirs
+    os.makedirs(kwargs["csv_output_dir"], exist_ok=True)
+    os.makedirs(kwargs["figure_dir"], exist_ok=True)
 
     # load model, trace, theta
     trace, model = load_trace_and_model(kwargs["model_filepath"])
