@@ -19,8 +19,8 @@ def sampling(occurences_a, occurences_b):
         obs_a = pm.Bernoulli("obs_a", p_a, observed=occurences_a)  # noqa: F841
         obs_b = pm.Bernoulli("obs_b", p_b, observed=occurences_b)  # noqa: F841
         step = pm.Metropolis()
-        trace = pm.sample(20000, step=step)
-        burned_trace = trace[1000:]
+        trace = pm.sample(20000, tune=0, step=step)
+        burned_trace = trace
 
     return burned_trace, model
 
