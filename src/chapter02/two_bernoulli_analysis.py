@@ -166,9 +166,7 @@ def calc_prob_dist(p_a, p_b, ci):
     prob = [(p_a < p_b + x).mean() for x in values]
     prob2 = [(p_a - p_b < x).mean() for x in values]
 
-    result_df = pd.DataFrame(
-        [values, prob, prob2], columns=["diff", "prob", "prob2"]
-    )
+    result_df = pd.DataFrame({"diff": values, "prob": prob, "prob2": prob2})
     return result_df
 
 
