@@ -178,7 +178,7 @@ def plot_histogram(p_a_true, p_b_true, trace):
         axes[2 * 2 + reference].sharex(axes[reference])
 
     for ax in axes:
-        ax.legend()
+        ax.legend(loc="upper right")
         ax.grid()
 
     fig.suptitle("$p_A$ と $p_B$ の事後分布と真の値")
