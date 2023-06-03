@@ -135,10 +135,22 @@ def load_theta(filepath):
 
 
 def calc_prob_for_dicision(trace, model):
+    hdi_prob = 0.95
     # a の 95% 確信区間
-    p_a_ci_low, p_a_ci_high = calc_credible_intervals(trace["p_a"])
-    # a の 95% 確信区間
-    pass
+    p_a_ci_low, p_a_ci_high = calc_credible_intervals(
+        trace["p_a"], hdi_prob=hdi_prob
+    )
+    # b の 95% 確信区間
+    p_b_ci_low, p_b_ci_high = calc_credible_intervals(
+        trace["p_b"], hdi_prob=hdi_prob
+    )
+    logger = logging.getLogger(__name__)
+
+    ci_metrics = {
+        "p_a_ci": (p_a_ci_low, p_a_ci_high),
+        "p_b_ci": (p_b_ci_low, p_b_ci_high),
+    }
+    logger.info(f"credible intarvals: {ci_metrics}")
 
 
 def calc_compare_trueth_and_prob(
