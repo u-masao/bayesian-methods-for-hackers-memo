@@ -116,23 +116,31 @@ def plot_histogram(p_a_true, p_b_true, trace):
     for cumulative in [False, True]:
         options = {"cumulative": cumulative}
         plot_histogram_overlap(
-            axes[index], p_a_true, p_b_true, trace, **options
+            axes[0 + index], p_a_true, p_b_true, trace, **options
         )
         plot_histogram_single(
-            axes[index], p_a_true, trace["p_a"], value_name="$p_a$", **options
+            axes[2 + index],
+            p_a_true,
+            trace["p_a"],
+            value_name="$p_a$",
+            **options,
         )
         plot_histogram_single(
-            axes[index], p_b_true, trace["p_b"], value_name="$p_b$", **options
+            axes[4 + index],
+            p_b_true,
+            trace["p_b"],
+            value_name="$p_b$",
+            **options,
         )
         plot_histogram_single(
-            axes[index],
+            axes[6 + index],
             p_b_true - p_a_true,
             trace["p_b"] - trace["p_a"],
             value_name="$p_b - p_a$",
             **options,
         )
         plot_histogram_single(
-            axes[index],
+            axes[8 + index],
             (p_b_true - p_a_true) / p_a_true,
             (trace["p_b"] - trace["p_a"]) / trace["p_a"],
             value_name="$(p_b - p_a) / p_a$",
