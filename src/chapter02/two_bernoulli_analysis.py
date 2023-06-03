@@ -5,6 +5,7 @@ import click
 import japanize_matplotlib  # noqa: F401
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 
 from src.utils import (
     calc_credible_intervals,
@@ -134,23 +135,56 @@ def load_theta(filepath):
     return p_a_true, p_b_true, n_a, n_b, occurences_a, occurences_b
 
 
-def calc_prob_for_dicision(trace, model):
-    hdi_prob = 0.95
-    # a の 95% 確信区間
-    p_a_ci_low, p_a_ci_high = calc_credible_intervals(
-        trace["p_a"], hdi_prob=hdi_prob
-    )
-    # b の 95% 確信区間
-    p_b_ci_low, p_b_ci_high = calc_credible_intervals(
-        trace["p_b"], hdi_prob=hdi_prob
-    )
+def calc_ci(p_a, p_b, hdi_prob=0.95):
+    # init log
     logger = logging.getLogger(__name__)
 
-    ci_metrics = {
-        "p_a_ci": (p_a_ci_low, p_a_ci_high),
-        "p_b_ci": (p_b_ci_low, p_b_ci_high),
+    p_diff = p_b - p_a
+    p_ratio = p_diff / p_a
+
+    # 確信区間を計算
+    p_a_ci_low, p_a_ci_high = calc_credible_intervals(p_a, hdi_prob=hdi_prob)
+    p_b_ci_low, p_b_ci_high = calc_credible_intervals(p_b, hdi_prob=hdi_prob)
+    p_diff_ci_low, p_diff_ci_high = calc_credible_intervals(
+        p_diff, hdi_prob=hdi_prob
+    )
+    p_ratio_ci_low, p_ratio_ci_high = calc_credible_intervals(
+        p_ratio, hdi_prob=hdi_prob
+    )
+    ci = {
+        "p_a": {"low": p_a_ci_low, "high": p_a_ci_high},
+        "p_b": {"low": p_b_ci_low, "high": p_b_ci_high},
+        "p_diff": {"low": p_diff_ci_low, "high": p_diff_ci_high},
+        "p_ratio": {"low": p_ratio_ci_low, "high": p_ratio_ci_high},
     }
-    logger.info(f"credible intarvals: {ci_metrics}")
+    logger.info(f"credible intarvals: {ci}")
+    return ci
+
+
+def calc_prob_dist(p_a, p_b, ci):
+    values = np.linspace(ci["p_diff"]["low"], ci["p_diff"]["high"], 100)
+    prob = [(p_a < p_b + x).mean() for x in values]
+    prob2 = [(p_a - p_b < x).mean() for x in values]
+
+    result_df = pd.DataFrame(
+        [values, prob, prob2], columns=["diff", "prob", "prob2"]
+    )
+    return result_df
+
+
+def calc_prob_for_dicision(
+    trace, model, p_a_true, p_b_true, occurences_a, occurences_b, hdi_prob=0.95
+):
+    p_a = trace["p_a"]
+    p_b = trace["p_b"]
+    # p_diff = p_b - p_a
+    # p_ratio = p_diff / p_a
+    ci = calc_ci(p_a, p_b, hdi_prob=hdi_prob)
+
+    # 差と確率
+    prob_diff_df = calc_prob_dist(p_a, p_b, ci)
+
+    return ci, prob_diff_df
 
 
 def calc_compare_trueth_and_prob(
@@ -193,10 +227,11 @@ def main(**kwargs):
     log_metrics(occurences_b, p_b_true, "b")
 
     # 意思決定に利用する確率などの計算
-    calc_prob_for_dicision(trace, model)
-    calc_compare_trueth_and_prob(
+
+    ci, prob_diff_df = calc_prob_for_dicision(
         trace, model, p_a_true, p_b_true, occurences_a, occurences_b
     )
+    prob_diff_df.to_csv("data/processed/prob_diff.csv")
 
 
 if __name__ == "__main__":
