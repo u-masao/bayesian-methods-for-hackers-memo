@@ -171,3 +171,20 @@ stages:
     - path: reports/figures/chapter02/two/trace.png
       md5: 74fd4d2d2a133ecebfa64961589e106f
       size: 177482
+  chap02_two_bernoulli_sampling@2:
+    cmd: poetry run python -m src.chapter02.two_bernoulli_sampling --model_output_filepath
+      models/chapter02/two_bernoulli_2.pickle --theta_filepath models/chapter02/two_bernoulli_theta_2.npz
+    deps:
+    - path: src/chapter02/two_bernoulli_sampling.py
+      md5: 4fd90b0d9980489944c94d9d50fffe60
+      size: 3891
+    - path: src/utils.py
+      md5: 08908d6b0cc85d9d1565106989f226c5
+      size: 1331
+    outs:
+    - path: models/chapter02/two_bernoulli_2.pickle
+      md5: 5657cb5f88597690925f50e2b8bb8871
+      size: 5756836
+    - path: models/chapter02/two_bernoulli_theta_2.npz
+      md5: 3b07c59f4bedd631e6b6897823875916
+      size: 19546
