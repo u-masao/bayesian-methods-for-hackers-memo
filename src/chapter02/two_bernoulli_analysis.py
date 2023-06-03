@@ -165,7 +165,6 @@ def calc_prob_dist(samples, hdi_prob=0.95, divide=100):
     """
     累積分布を計算
     """
-    print(hdi_prob)
     ci_low, ci_high = calc_credible_intervals(samples, hdi_prob=hdi_prob)
     values = np.linspace(ci_low, ci_high, divide)
     prob = [(samples < x).mean() for x in values]
@@ -182,8 +181,8 @@ def calc_prob_for_dicision(
     ci = calc_ci(p_a, p_b, hdi_prob=hdi_prob)
 
     # 差と確率
-    prob_diff_df = calc_prob_dist(p_diff, ci)
-    prob_ratio_df = calc_prob_dist(p_ratio, ci)
+    prob_diff_df = calc_prob_dist(p_diff)
+    prob_ratio_df = calc_prob_dist(p_ratio)
 
     return ci, prob_diff_df, prob_ratio_df
 
@@ -200,6 +199,13 @@ def main(**kwargs):
     p_a_true, p_b_true, n_a, n_b, occurences_a, occurences_b = load_theta(
         kwargs["theta_filepath"]
     )
+
+    # 意思決定に利用する確率などの計算
+    ci, prob_diff_df, prob_ratio_df = calc_prob_for_dicision(
+        trace, model, p_a_true, p_b_true, occurences_a, occurences_b
+    )
+    prob_diff_df.to_csv("data/processed/prob_diff.csv")
+    prob_ratio_df.to_csv("data/processed/prob_ratio.csv")
 
     # plot trace
     savefig(
@@ -220,14 +226,6 @@ def main(**kwargs):
     # ログ出力
     log_metrics(occurences_a, p_a_true, "a")
     log_metrics(occurences_b, p_b_true, "b")
-
-    # 意思決定に利用する確率などの計算
-
-    ci, prob_diff_df, prob_ratio_df = calc_prob_for_dicision(
-        trace, model, p_a_true, p_b_true, occurences_a, occurences_b
-    )
-    prob_diff_df.to_csv("data/processed/prob_diff.csv")
-    prob_ratio_df.to_csv("data/processed/prob_ratio.csv")
 
 
 if __name__ == "__main__":
