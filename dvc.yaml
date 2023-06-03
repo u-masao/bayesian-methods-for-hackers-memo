@@ -70,8 +70,8 @@ stages:
     do:
       cmd: >-
         poetry run python -m src.chapter02.two_bernoulli_analysis
-        models/chapter02/two_bernoulli_${item.index}.pickle
-        models/chapter02/two_bernoulli_theta_${item.index}.npz
+        models/chapter02/${item.index}/two_bernoulli.pickle
+        models/chapter02/${item.index}/two_bernoulli_theta.npz
         data/processed/chapter02/two/${item.index}/
         --figure_dir reports/figures/chapter02/two/${item.index}/
       deps:
