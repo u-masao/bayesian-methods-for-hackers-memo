@@ -179,8 +179,8 @@ def load_theta(filepath):
     p_b_true = theta["p_b_true"]
     n_a = theta["n_a"]
     n_b = theta["n_b"]
-    observations_a = theta["occurences_a"]
-    observations_b = theta["occurences_b"]
+    observations_a = theta["observations_a"]
+    observations_b = theta["observations_b"]
     return p_a_true, p_b_true, n_a, n_b, observations_a, observations_b
 
 

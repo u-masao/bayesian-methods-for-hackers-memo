@@ -10,14 +10,18 @@ import scipy.stats as stats
 from src.utils import save_trace_and_model
 
 
-def sampling(occurences_a, occurences_b):
+def sampling(observations_a, observations_b):
     model = pm.Model()
     with model:
         p_a = pm.Uniform("p_a", 0, 1)
         p_b = pm.Uniform("p_b", 0, 1)
         delta = pm.Deterministic("delta", p_a - p_b)  # noqa: F841
-        obs_a = pm.Bernoulli("obs_a", p_a, observed=occurences_a)  # noqa: F841
-        obs_b = pm.Bernoulli("obs_b", p_b, observed=occurences_b)  # noqa: F841
+        obs_a = pm.Bernoulli(  # noqa: F841
+            "obs_a", p_a, observed=observations_a
+        )
+        obs_b = pm.Bernoulli(  # noqa: F841
+            "obs_b", p_b, observed=observations_b
+        )
         step = pm.Metropolis()
         trace = pm.sample(20000, tune=2000, step=step, chains=3)
         burned_trace = trace
@@ -114,11 +118,11 @@ def main(**kwargs):
     n_b = kwargs["n_b"]
 
     # 観測データを生成
-    occurences_a = stats.bernoulli.rvs(p_a_true, size=n_a)
-    occurences_b = stats.bernoulli.rvs(p_b_true, size=n_b)
+    observations_a = stats.bernoulli.rvs(p_a_true, size=n_a)
+    observations_b = stats.bernoulli.rvs(p_b_true, size=n_b)
 
     # sampling
-    trace, model = sampling(occurences_a, occurences_b)
+    trace, model = sampling(observations_a, observations_b)
 
     # save model, trace, theta, observed
     save_trace_and_model(trace, model, kwargs["model_output_filepath"])
@@ -128,8 +132,8 @@ def main(**kwargs):
         p_b_true=p_b_true,
         n_a=n_a,
         n_b=n_b,
-        occurences_a=occurences_a,
-        occurences_b=occurences_b,
+        observations_a=observations_a,
+        observations_b=observations_b,
     )
 
 
