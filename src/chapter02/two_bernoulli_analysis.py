@@ -15,19 +15,17 @@ from src.utils import (
 )
 
 
-def log_observation_summary(occurences, p_true, label):
-    logger = logging.getLogger(__name__)
+def log_observation_summary(occurences, p_true):
     disp_length = np.min([20, len(occurences)])
     metrics = {
-        "occurrence": occurences[:disp_length],
-        "len": len(occurences),
-        "sum": np.sum(occurences),
-        "mean": np.mean(occurences),
-        "mean - p_true:": np.mean(occurences) - p_true,
-        "(mean - p_true) / p_true:": (np.mean(occurences) - p_true) / p_true,
+        "obs": occurences[:disp_length],
+        "obs_len": len(occurences),
+        "obs_sum": np.sum(occurences),
+        "obs_mean": np.mean(occurences),
+        "obs_mean - p_true:": np.mean(occurences) - p_true,
+        "(obs_mean - p_true) / p_true:": (np.mean(occurences) - p_true)
+        / p_true,
     }
-
-    logger.info(f"{label} 観測値と真の値: \n{metrics}")
     return metrics
 
 
@@ -198,10 +196,10 @@ def calc_ci(p_a, p_b, hdi_prob=0.95):
         p_ratio, hdi_prob=hdi_prob
     )
     ci = {
-        "p_a": {"low": p_a_ci_low, "high": p_a_ci_high},
-        "p_b": {"low": p_b_ci_low, "high": p_b_ci_high},
-        "p_diff": {"low": p_diff_ci_low, "high": p_diff_ci_high},
-        "p_ratio": {"low": p_ratio_ci_low, "high": p_ratio_ci_high},
+        "p_a": {"ci_low": p_a_ci_low, "ci_high": p_a_ci_high},
+        "p_b": {"ci_low": p_b_ci_low, "ci_high": p_b_ci_high},
+        "p_diff": {"ci_low": p_diff_ci_low, "ci_high": p_diff_ci_high},
+        "p_ratio": {"ci_low": p_ratio_ci_low, "ci_high": p_ratio_ci_high},
     }
     logger.info(f"確信区間: {ci}")
     return ci
@@ -258,15 +256,17 @@ def main(**kwargs):
         kwargs["theta_filepath"]
     )
 
-    # ログ出力
+    # 指標を計算
     metrics = {}
-    metrics["obs_a"] = log_observation_summary(occurences_a, p_a_true, "a")
-    metrics["obs_b"] = log_observation_summary(occurences_b, p_b_true, "b")
+    metrics["obs_a"] = log_observation_summary(occurences_a, p_a_true)
+    metrics["obs_b"] = log_observation_summary(occurences_b, p_b_true)
 
     # 確信区間を計算
     hdi_prob = 0.95
     ci = calc_ci(trace["p_a"], trace["p_b"], hdi_prob=hdi_prob)
     metrics.update(ci)
+
+    # 指標を出力
     logger.info(f"metrics: {metrics}")
     pd.DataFrame(metrics).to_csv("data/processed/metrics.csv")
 
