@@ -263,6 +263,7 @@ def calc_prob_for_dicision(
 @click.command()
 @click.argument("model_filepath", type=click.Path(exists=True))
 @click.argument("theta_filepath", type=click.Path(exists=True))
+@click.argument("csv_output_dir", type=click.Path())
 @click.option(
     "--figure_dir", type=click.Path(), default="reports/figures/chapter02/"
 )
@@ -292,13 +293,15 @@ def main(**kwargs):
 
     # 指標を出力
     logger.info(f"metrics: {metrics}")
-    pd.DataFrame(metrics).to_csv("data/processed/metrics.csv")
+    pd.DataFrame(metrics).to_csv(
+        Path(kwargs["csv_output_dir"]) / "metrics.csv"
+    )
 
     # 意思決定に利用する確率などの計算
     prob_summary_df = calc_prob_for_dicision(
         trace, model, p_a_true, p_b_true, observations_a, observations_b
     )
-    prob_summary_df.to_csv("data/processed/prob_for_dicision.csv")
+    prob_summary_df.to_csv(Path(["csv_output_dir"]) / "prob_for_dicision.csv")
 
     # plot trace
     savefig(

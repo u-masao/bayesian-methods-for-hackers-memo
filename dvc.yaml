@@ -58,6 +58,7 @@ stages:
       poetry run python -m src.chapter02.two_bernoulli_analysis
       models/chapter02/two_bernoulli.pickle
       models/chapter02/two_bernoulli_theta.npz
+      data/processed/chapter02/two/
       --figure_dir reports/figures/chapter02/two/
     deps:
     - models/chapter02/two_bernoulli.pickle
@@ -67,3 +68,4 @@ stages:
     outs:
     - reports/figures/chapter02/two/bernoulli.png
     - reports/figures/chapter02/two/trace.png
+    - data/processed/chapter02/two/
