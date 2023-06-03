@@ -7,7 +7,19 @@ flowchart TD
 	node2-->node3
 	node3-->node1
 	node4["chap02_one_bernoulli"]
-	node5["chap02_two_bernoulli_analysis"]
-	node6["chap02_two_bernoulli_sampling"]
+	node5["chap02_two_bernoulli_analysis@0"]
+	node6["chap02_two_bernoulli_sampling@0"]
 	node6-->node5
+	node7["chap02_two_bernoulli_analysis@1"]
+	node8["chap02_two_bernoulli_sampling@1"]
+	node8-->node7
+	node9["chap02_two_bernoulli_analysis@2"]
+	node10["chap02_two_bernoulli_sampling@2"]
+	node10-->node9
+	node11["chap02_two_bernoulli_analysis@3"]
+	node12["chap02_two_bernoulli_sampling@3"]
+	node12-->node11
+	node13["chap02_two_bernoulli_analysis@4"]
+	node14["chap02_two_bernoulli_sampling@4"]
+	node14-->node13
 ```
