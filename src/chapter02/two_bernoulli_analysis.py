@@ -30,7 +30,13 @@ def log_metrics(occurences, p_true, label):
 
 
 def plot_histogram_single(
-    ax, p_true, sample, value_name="", color=None, hdi_prob=0.95
+    ax,
+    p_true,
+    sample,
+    value_name="",
+    color=None,
+    hdi_prob=0.95,
+    flag_cumulative=False,
 ):
     # 描画色を指定
     if color is None:
@@ -42,17 +48,21 @@ def plot_histogram_single(
     # タイトルを指定
     ax.set_title(f"{value_name} の分布")
 
-    # plot
-    n, _, _ = ax.hist(
-        sample,
+    hist_args = dict(
         bins=25,
         label=f"{value_name} の分布",
         alpha=0.4,
         color=color,
         density=True,
-        cumulative=True,
-        histtype="step",
     )
+
+    if flag_cumulative:
+        hist_args["cumulative"] = True
+        hist_args["histtype"] = "step"
+        hist_args["alpha"] = 0.9
+
+    # plot
+    n, _, _ = ax.hist(sample, **hist_args)
     ax.vlines(
         p_true,
         0,
