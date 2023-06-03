@@ -109,44 +109,42 @@ def plot_histogram_overlap(
 
 def plot_histogram(p_a_true, p_b_true, trace):
     """plot histogram"""
-    fig, axes = plt.subplots(5, 2, figsize=(8, 12))
+    fig, axes = plt.subplots(5, 2, figsize=(16, 12))
     axes = axes.flatten()
 
-    index = 0
-    for cumulative in [False, True]:
+    for offset, cumulative in enumerate([False, True]):
         options = {"cumulative": cumulative}
         plot_histogram_overlap(
-            axes[0 + index], p_a_true, p_b_true, trace, **options
+            axes[0 + offset], p_a_true, p_b_true, trace, **options
         )
         plot_histogram_single(
-            axes[2 + index],
+            axes[2 + offset],
             p_a_true,
             trace["p_a"],
             value_name="$p_a$",
             **options,
         )
         plot_histogram_single(
-            axes[4 + index],
+            axes[4 + offset],
             p_b_true,
             trace["p_b"],
             value_name="$p_b$",
             **options,
         )
         plot_histogram_single(
-            axes[6 + index],
+            axes[6 + offset],
             p_b_true - p_a_true,
             trace["p_b"] - trace["p_a"],
             value_name="$p_b - p_a$",
             **options,
         )
         plot_histogram_single(
-            axes[8 + index],
+            axes[8 + offset],
             (p_b_true - p_a_true) / p_a_true,
             (trace["p_b"] - trace["p_a"]) / trace["p_a"],
             value_name="$(p_b - p_a) / p_a$",
             **options,
         )
-        index += 1
 
     # 軸のスケールを一致
     for reference in [0, 1]:
