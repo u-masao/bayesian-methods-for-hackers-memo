@@ -51,6 +51,7 @@ def plot_histogram_single(
         color=color,
         density=True,
         cumulative=True,
+        histtype="step",
     )
     ax.vlines(
         p_true,
