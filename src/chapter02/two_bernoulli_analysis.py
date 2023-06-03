@@ -92,8 +92,18 @@ def plot_histogram_single(
         alpha=0.9,
         marker="x",
     )
-    ax.annotate(f"{ci_low:0.23f}", xy=(ci_low, ci_bar_y), ha="center")
-    ax.annotate(f"{ci_high:0.23f}", xy=(ci_high, ci_bar_y), ha="center")
+    ax.annotate(
+        f"{ci_low:0.3f}",
+        xy=(ci_low, ci_bar_y + 0.05),
+        ha="center",
+        va="bottom",
+    )
+    ax.annotate(
+        f"{ci_high:0.3f}",
+        xy=(ci_high, ci_bar_y) + 0.05,
+        ha="center",
+        va="bottom",
+    )
 
 
 def plot_histogram_overlap(
