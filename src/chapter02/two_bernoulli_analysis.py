@@ -36,12 +36,14 @@ def plot_histogram_single(
     p_true,
     sample,
     value_name="",
-    color=None,
+    color_number=None,
     hdi_prob=0.95,
     cumulative=False,
 ):
     # 描画色を指定
-    if color is None:
+    if color_number is not None:
+        color = plt.get_cmap("Dark2")(color_number % 10)
+    else:
         color = plt.get_cmap("Dark2")(int(np.random.rand() * 10))
 
     # 確信区間を計算
@@ -95,7 +97,7 @@ def plot_histogram_overlap(
         p_a_true,
         burned_trace["p_a"],
         value_name="$p_a$",
-        color=plt.get_cmap("Dark2")(0),
+        color_number=0,
         cumulative=cumulative,
     )
     plot_histogram_single(
@@ -103,7 +105,7 @@ def plot_histogram_overlap(
         p_b_true,
         burned_trace["p_b"],
         value_name="$p_b$",
-        color=plt.get_cmap("Dark2")(1),
+        color_number=2,
         cumulative=cumulative,
     )
     ax.set_title("$p_a$ と $p_b$ のヒストグラム")
@@ -124,6 +126,7 @@ def plot_histogram(p_a_true, p_b_true, trace):
             p_a_true,
             trace["p_a"],
             value_name="$p_a$",
+            color_number=2,
             **options,
         )
         plot_histogram_single(
@@ -131,6 +134,7 @@ def plot_histogram(p_a_true, p_b_true, trace):
             p_b_true,
             trace["p_b"],
             value_name="$p_b$",
+            color_number=4,
             **options,
         )
         plot_histogram_single(
@@ -138,6 +142,7 @@ def plot_histogram(p_a_true, p_b_true, trace):
             p_b_true - p_a_true,
             trace["p_b"] - trace["p_a"],
             value_name="$p_b - p_a$",
+            color_number=6,
             **options,
         )
         plot_histogram_single(
@@ -145,6 +150,7 @@ def plot_histogram(p_a_true, p_b_true, trace):
             (p_b_true - p_a_true) / p_a_true,
             (trace["p_b"] - trace["p_a"]) / trace["p_a"],
             value_name="$(p_b - p_a) / p_a$",
+            color_number=8,
             **options,
         )
 
