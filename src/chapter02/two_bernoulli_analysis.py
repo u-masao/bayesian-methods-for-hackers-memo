@@ -40,6 +40,9 @@ def plot_histogram_single(
     hdi_prob=0.95,
     cumulative=False,
 ):
+    """
+    ヒストグラムを描画
+    """
     # 描画色を指定
     if color_number is not None:
         color = plt.get_cmap("Dark2")(color_number % 10)
@@ -176,8 +179,8 @@ def load_theta(filepath):
     p_b_true = theta["p_b_true"]
     n_a = theta["n_a"]
     n_b = theta["n_b"]
-    observations_a = theta["observations_a"]
-    observations_b = theta["observations_b"]
+    observations_a = theta["occurences_a"]
+    observations_b = theta["occurences_b"]
     return p_a_true, p_b_true, n_a, n_b, observations_a, observations_b
 
 
