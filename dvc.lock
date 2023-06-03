@@ -136,27 +136,27 @@ stages:
       models/chapter02/two_bernoulli.pickle --theta_filepath models/chapter02/two_bernoulli_theta.npz
     deps:
     - path: src/chapter02/two_bernoulli_sampling.py
-      md5: 2f0b5e3bb16cd2682aba3ed9640ff430
-      size: 3813
+      md5: 3e3b0a1df6fc217ba6853ecd4d88ac1a
+      size: 3823
     - path: src/utils.py
       md5: 08908d6b0cc85d9d1565106989f226c5
       size: 1331
     outs:
     - path: models/chapter02/two_bernoulli.pickle
-      md5: 2b0d49572f020e2428f5161f62f7143c
-      size: 4229333
+      md5: 8684ad9f24dcefaa449491351ecd31d3
+      size: 5764877
     - path: models/chapter02/two_bernoulli_theta.npz
-      md5: d28dcd53b42d4bb2294cc2e5e515c8cd
+      md5: da02c0a940262326dbfcb8d49d910dc2
       size: 19538
   chap02_two_bernoulli_analysis:
     cmd: poetry run python -m src.chapter02.two_bernoulli_analysis models/chapter02/two_bernoulli.pickle
       models/chapter02/two_bernoulli_theta.npz --figure_dir reports/figures/chapter02/two/
     deps:
     - path: models/chapter02/two_bernoulli.pickle
-      md5: 2b0d49572f020e2428f5161f62f7143c
-      size: 4229333
+      md5: 8684ad9f24dcefaa449491351ecd31d3
+      size: 5764877
     - path: models/chapter02/two_bernoulli_theta.npz
-      md5: d28dcd53b42d4bb2294cc2e5e515c8cd
+      md5: da02c0a940262326dbfcb8d49d910dc2
       size: 19538
     - path: src/chapter02/two_bernoulli_analysis.py
       md5: 9ad129377e792f7034867a835a92081a
@@ -166,8 +166,8 @@ stages:
       size: 1331
     outs:
     - path: reports/figures/chapter02/two/bernoulli.png
-      md5: 02cf23a6e00a6f52b3ecb5c61c54a1d2
-      size: 97497
+      md5: eee14815a0e01da16d704d2b0ce0c327
+      size: 100967
     - path: reports/figures/chapter02/two/trace.png
-      md5: 93268986fcf3c27a34a5b878aaf4d5a7
-      size: 141675
+      md5: 72e4ca65aed1bc060f16502bdeb011d9
+      size: 173892
