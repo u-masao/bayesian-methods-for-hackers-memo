@@ -15,18 +15,20 @@ from src.utils import (
 )
 
 
-def log_observation_summary(occurences, p_true):
-    disp_length = np.min([20, len(occurences)])
-    metrics = {
-        "obs": occurences[:disp_length],
-        "obs_len": len(occurences),
-        "obs_sum": np.sum(occurences),
-        "obs_mean": np.mean(occurences),
-        "obs_mean - p_true:": np.mean(occurences) - p_true,
-        "(obs_mean - p_true) / p_true:": (np.mean(occurences) - p_true)
+def calc_summary_of_obs_and_true(observations, p_true):
+    """
+    観測値のサマリーと真値との違いを計算
+    """
+    disp_length = np.min([20, len(observations)])
+    return {
+        "obs": observations[:disp_length],
+        "obs_len": len(observations),
+        "obs_sum": np.sum(observations),
+        "obs_mean": np.mean(observations),
+        "obs_mean - p_true:": np.mean(observations) - p_true,
+        "(obs_mean - p_true) / p_true:": (np.mean(observations) - p_true)
         / p_true,
     }
-    return metrics
 
 
 def plot_histogram_single(
@@ -174,9 +176,9 @@ def load_theta(filepath):
     p_b_true = theta["p_b_true"]
     n_a = theta["n_a"]
     n_b = theta["n_b"]
-    occurences_a = theta["occurences_a"]
-    occurences_b = theta["occurences_b"]
-    return p_a_true, p_b_true, n_a, n_b, occurences_a, occurences_b
+    observations_a = theta["observations_a"]
+    observations_b = theta["observations_b"]
+    return p_a_true, p_b_true, n_a, n_b, observations_a, observations_b
 
 
 def calc_ci(p_a, p_b, hdi_prob=0.95):
@@ -216,7 +218,13 @@ def calc_prob_dist(samples, hdi_prob=0.95, divide=100):
 
 
 def calc_prob_for_dicision(
-    trace, model, p_a_true, p_b_true, occurences_a, occurences_b, hdi_prob=0.95
+    trace,
+    model,
+    p_a_true,
+    p_b_true,
+    observations_a,
+    observations_b,
+    hdi_prob=0.95,
 ):
     # 評価対象を作成
     p_a = trace["p_a"]
@@ -252,14 +260,14 @@ def main(**kwargs):
 
     # load model, trace, theta
     trace, model = load_trace_and_model(kwargs["model_filepath"])
-    p_a_true, p_b_true, n_a, n_b, occurences_a, occurences_b = load_theta(
+    p_a_true, p_b_true, n_a, n_b, observations_a, observations_b = load_theta(
         kwargs["theta_filepath"]
     )
 
     # 指標を計算
     metrics = {}
-    metrics["obs_a"] = log_observation_summary(occurences_a, p_a_true)
-    metrics["obs_b"] = log_observation_summary(occurences_b, p_b_true)
+    metrics["obs_a"] = calc_summary_of_obs_and_true(observations_a, p_a_true)
+    metrics["obs_b"] = calc_summary_of_obs_and_true(observations_b, p_b_true)
 
     # 確信区間を計算
     hdi_prob = 0.95
@@ -272,7 +280,7 @@ def main(**kwargs):
 
     # 意思決定に利用する確率などの計算
     prob_summary_df = calc_prob_for_dicision(
-        trace, model, p_a_true, p_b_true, occurences_a, occurences_b
+        trace, model, p_a_true, p_b_true, observations_a, observations_b
     )
     prob_summary_df.to_csv("data/processed/prob_for_dicision.csv")
 
