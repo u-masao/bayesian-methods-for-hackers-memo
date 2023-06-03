@@ -92,8 +92,8 @@ def plot_histogram_single(
         alpha=0.9,
         marker="x",
     )
-    ax.annotate(f"{ci_low:0.2f}", xy=(ci_low, ci_bar_y), ha="center")
-    ax.annotate(f"{ci_high:0.2f}", xy=(ci_high, ci_bar_y), ha="center")
+    ax.annotate(f"{ci_low:0.23f}", xy=(ci_low, ci_bar_y), ha="center")
+    ax.annotate(f"{ci_high:0.23f}", xy=(ci_high, ci_bar_y), ha="center")
 
 
 def plot_histogram_overlap(
@@ -115,7 +115,7 @@ def plot_histogram_overlap(
         color_number=2,
         cumulative=cumulative,
     )
-    ax.set_title("$p_a$ と $p_b$ のヒストグラム")
+    ax.set_title("$p_a$ と $p_b$ の分布")
 
 
 def plot_histogram(p_a_true, p_b_true, trace):
