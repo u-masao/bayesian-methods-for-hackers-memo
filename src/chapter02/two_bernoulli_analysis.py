@@ -165,6 +165,7 @@ def calc_prob_dist(samples, hdi_prob=0.95, divide=100):
     """
     累積分布を計算
     """
+    print(hdi_prob)
     ci_low, ci_high = calc_credible_intervals(samples, hdi_prob=hdi_prob)
     values = np.linspace(ci_low, ci_high, divide)
     prob = [(samples < x).mean() for x in values]
