@@ -245,6 +245,9 @@ def calc_prob_for_dicision(
     "--figure_dir", type=click.Path(), default="reports/figures/chapter02/"
 )
 def main(**kwargs):
+    # init log
+    logger = logging.getLogger(__name__)
+
     # load model, trace, theta
     trace, model = load_trace_and_model(kwargs["model_filepath"])
     p_a_true, p_b_true, n_a, n_b, occurences_a, occurences_b = load_theta(
@@ -260,6 +263,7 @@ def main(**kwargs):
     hdi_prob = 0.95
     ci = calc_ci(trace["p_a"], trace["p_b"], hdi_prob=hdi_prob)
     metrics = metrics.update(ci)
+    logger.info(f"metrics: {metrics}")
     pd.DataFrame(metrics).to_csv("data/processed/metrics.csv")
 
     # 意思決定に利用する確率などの計算
