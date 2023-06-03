@@ -161,13 +161,14 @@ def calc_ci(p_a, p_b, hdi_prob=0.95):
     return ci
 
 
-def calc_prob_dist(p_a, p_b, ci):
-    values = np.linspace(ci["p_diff"]["low"], ci["p_diff"]["high"], 100)
-    prob = [(p_a < p_b + x).mean() for x in values]
-    prob2 = [(p_a - p_b < x).mean() for x in values]
-
-    result_df = pd.DataFrame({"diff": values, "prob": prob, "prob2": prob2})
-    return result_df
+def calc_prob_dist(samples, hdi_prob=0.95, divide=100):
+    """
+    累積分布を計算
+    """
+    ci_low, ci_high = calc_credible_intervals(samples, hdi_prob=hdi_prob)
+    values = np.linspace(ci_low, ci_high, divide)
+    prob = [(samples < x).mean() for x in values]
+    return pd.DataFrame({"value": values, "prob": prob})
 
 
 def calc_prob_for_dicision(
@@ -175,20 +176,15 @@ def calc_prob_for_dicision(
 ):
     p_a = trace["p_a"]
     p_b = trace["p_b"]
-    # p_diff = p_b - p_a
-    # p_ratio = p_diff / p_a
+    p_diff = p_b - p_a
+    p_ratio = p_diff / p_a
     ci = calc_ci(p_a, p_b, hdi_prob=hdi_prob)
 
     # 差と確率
-    prob_diff_df = calc_prob_dist(p_a, p_b, ci)
+    prob_diff_df = calc_prob_dist(p_diff, ci)
+    prob_ratio_df = calc_prob_dist(p_ratio, ci)
 
-    return ci, prob_diff_df
-
-
-def calc_compare_trueth_and_prob(
-    trace, model, p_a_true, p_b_true, occurences_a, occurences_b
-):
-    pass
+    return ci, prob_diff_df, prob_ratio_df
 
 
 @click.command()
@@ -226,10 +222,11 @@ def main(**kwargs):
 
     # 意思決定に利用する確率などの計算
 
-    ci, prob_diff_df = calc_prob_for_dicision(
+    ci, prob_diff_df, prob_ratio_df = calc_prob_for_dicision(
         trace, model, p_a_true, p_b_true, occurences_a, occurences_b
     )
     prob_diff_df.to_csv("data/processed/prob_diff.csv")
+    prob_ratio_df.to_csv("data/processed/prob_ratio.csv")
 
 
 if __name__ == "__main__":
