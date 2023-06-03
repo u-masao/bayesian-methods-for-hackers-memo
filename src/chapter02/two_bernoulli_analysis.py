@@ -48,6 +48,7 @@ def plot_histogram_single(
     # タイトルを指定
     ax.set_title(f"{value_name} の分布")
 
+    # ヒストグラムのオプションを指定
     hist_args = dict(
         bins=25,
         label=f"{value_name} の分布",
@@ -56,6 +57,7 @@ def plot_histogram_single(
         density=True,
     )
 
+    # 累積分布関数を表示する際のオプションを指定
     if flag_cumulative:
         hist_args["cumulative"] = True
         hist_args["histtype"] = "step"
@@ -83,13 +85,16 @@ def plot_histogram_single(
     )
 
 
-def plot_histogram_overlap(ax, p_a_true, p_b_true, burned_trace):
+def plot_histogram_overlap(
+    ax, p_a_true, p_b_true, burned_trace, cumulative=False
+):
     plot_histogram_single(
         ax,
         p_a_true,
         burned_trace["p_a"],
         value_name="$p_a$",
         color=plt.get_cmap("Dark2")(0),
+        cumulative=cumulative,
     )
     plot_histogram_single(
         ax,
@@ -97,34 +102,48 @@ def plot_histogram_overlap(ax, p_a_true, p_b_true, burned_trace):
         burned_trace["p_b"],
         value_name="$p_b$",
         color=plt.get_cmap("Dark2")(1),
+        cumulative=cumulative,
     )
     ax.set_title("$p_a$ と $p_b$ のヒストグラム")
 
 
 def plot_histogram(p_a_true, p_b_true, trace):
     """plot histogram"""
-    fig, axes = plt.subplots(5, 1, figsize=(8, 12))
+    fig, axes = plt.subplots(5, 2, figsize=(8, 12))
     axes = axes.flatten()
 
-    plot_histogram_overlap(axes[0], p_a_true, p_b_true, trace)
-    plot_histogram_single(axes[1], p_a_true, trace["p_a"], value_name="$p_a$")
-    plot_histogram_single(axes[2], p_b_true, trace["p_b"], value_name="$p_b$")
-    plot_histogram_single(
-        axes[3],
-        p_b_true - p_a_true,
-        trace["p_b"] - trace["p_a"],
-        value_name="$p_b - p_a$",
-    )
-    plot_histogram_single(
-        axes[4],
-        (p_b_true - p_a_true) / p_a_true,
-        (trace["p_b"] - trace["p_a"]) / trace["p_a"],
-        value_name="$(p_b - p_a) / p_a$",
-    )
+    index = 0
+    for cumulative in [False, True]:
+        options = {"cumulative": cumulative}
+        plot_histogram_overlap(
+            axes[index], p_a_true, p_b_true, trace, **options
+        )
+        plot_histogram_single(
+            axes[index], p_a_true, trace["p_a"], value_name="$p_a$", **options
+        )
+        plot_histogram_single(
+            axes[index], p_b_true, trace["p_b"], value_name="$p_b$", **options
+        )
+        plot_histogram_single(
+            axes[index],
+            p_b_true - p_a_true,
+            trace["p_b"] - trace["p_a"],
+            value_name="$p_b - p_a$",
+            **options,
+        )
+        plot_histogram_single(
+            axes[index],
+            (p_b_true - p_a_true) / p_a_true,
+            (trace["p_b"] - trace["p_a"]) / trace["p_a"],
+            value_name="$(p_b - p_a) / p_a$",
+            **options,
+        )
+        index += 1
 
-    # 軸を一致
-    axes[1].sharex(axes[0])
-    axes[2].sharex(axes[0])
+    # 軸のスケールを一致
+    for reference in [0, 1]:
+        axes[1 * 2 + reference].sharex(axes[reference])
+        axes[2 * 2 + reference].sharex(axes[reference])
 
     for ax in axes:
         ax.legend()
