@@ -15,7 +15,7 @@ from src.utils import (
 )
 
 
-def log_metrics(occurences, p_true, label):
+def log_observation_summary(occurences, p_true, label):
     logger = logging.getLogger(__name__)
     disp_length = np.min([20, len(occurences)])
     metrics = {
@@ -28,6 +28,7 @@ def log_metrics(occurences, p_true, label):
     }
 
     logger.info(f"{label} 観測値と真の値: \n{metrics}")
+    return metrics
 
 
 def plot_histogram_single(
@@ -195,7 +196,7 @@ def calc_ci(p_a, p_b, hdi_prob=0.95):
         "p_diff": {"low": p_diff_ci_low, "high": p_diff_ci_high},
         "p_ratio": {"low": p_ratio_ci_low, "high": p_ratio_ci_high},
     }
-    logger.info(f"credible intarvals: {ci}")
+    logger.info(f"確信区間: {ci}")
     return ci
 
 
@@ -238,10 +239,17 @@ def main(**kwargs):
         kwargs["theta_filepath"]
     )
 
+    # ログ出力
+    metrics = {}
+    metrics["obs_a"] = log_observation_summary(occurences_a, p_a_true, "a")
+    metrics["obs_b"] = log_observation_summary(occurences_b, p_b_true, "b")
+
     # 意思決定に利用する確率などの計算
     ci, prob_diff_df, prob_ratio_df = calc_prob_for_dicision(
         trace, model, p_a_true, p_b_true, occurences_a, occurences_b
     )
+    metrics = metrics.update(ci)
+    pd.DataFrame(ci).to_csv("data/processed/metrics.csv")
     prob_diff_df.to_csv("data/processed/prob_diff.csv")
     prob_ratio_df.to_csv("data/processed/prob_ratio.csv")
 
@@ -260,10 +268,6 @@ def main(**kwargs):
         ),
         Path(kwargs["figure_dir"]) / "bernoulli.png",
     )
-
-    # ログ出力
-    log_metrics(occurences_a, p_a_true, "a")
-    log_metrics(occurences_b, p_b_true, "b")
 
 
 if __name__ == "__main__":
