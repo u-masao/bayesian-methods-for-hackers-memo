@@ -46,10 +46,11 @@ def plot_histogram_single(
     n, _, _ = ax.hist(
         sample,
         bins=25,
-        density=True,
         label=f"{value_name} の分布",
         alpha=0.4,
         color=color,
+        density=True,
+        cumulative=True,
     )
     ax.vlines(
         p_true,
