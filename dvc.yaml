@@ -1,4 +1,3 @@
-schema: '2.0'
 stages:
   chap01_download_data:
     cmd: >-
@@ -85,6 +84,8 @@ stages:
       - reports/figures/chapter02/two/${item.index}/trace.png
       - data/processed/chapter02/two/${item.index}/
   params_example:
+    params:
+      - params.yaml
     foreath: ${myobject}
     do:
       cmd: echo ${item.index} > data/interim/${item.index}.txt
