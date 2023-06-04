@@ -47,21 +47,23 @@ stages:
     do:
       cmd: >-
         poetry run python -m src.chapter02.two_bernoulli_sampling
-        --model_output_filepath models/chapter02/${key}/two_bernoulli.pickle
-        --theta_filepath models/chapter02/${key}/two_bernoulli_theta.npz
+        models/chapter02/${key}/two_bernoulli_model.pickle
+        models/chapter02/${key}/two_bernoulli_theta.npz
         --sampling_random_seed ${item.sampling_random_seed}
+        --n_a ${item.n_a}
+        --n_b ${item.n_b}
       deps:
       - src/chapter02/two_bernoulli_sampling.py
       - src/utils.py
       outs:
-      - models/chapter02/${key}/two_bernoulli.pickle
+      - models/chapter02/${key}/two_bernoulli_model.pickle
       - models/chapter02/${key}/two_bernoulli_theta.npz
   chap02_two_bernoulli_analysis:
     foreach: ${chapter02.two_bernoulli}
     do:
       cmd: >-
         poetry run python -m src.chapter02.two_bernoulli_analysis
-        models/chapter02/${key}/two_bernoulli.pickle
+        models/chapter02/${key}/two_bernoulli_model.pickle
         models/chapter02/${key}/two_bernoulli_theta.npz
         data/processed/chapter02/two/${key}/
         --figure_dir reports/figures/chapter02/two/${key}/
