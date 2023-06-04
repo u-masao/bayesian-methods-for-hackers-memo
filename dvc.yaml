@@ -86,8 +86,6 @@ stages:
   params_example:
     params:
       - params.yaml
-    foreath: ${myobject}
+    foreath: ${sampling_config}
     do:
-      cmd: echo ${item.index} > data/interim/${item.index}.txt
-      outs:
-      - data/interim/${item.index}.txt
+      cmd: echo a
