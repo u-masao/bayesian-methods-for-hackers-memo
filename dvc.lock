@@ -404,3 +404,9 @@ stages:
         - index: 1
         - index: 2
         - index: 3
+  params_example@0:
+    cmd: echo "1"
+  params_example@1:
+    cmd: echo "2"
+  params_example@2:
+    cmd: echo "3"

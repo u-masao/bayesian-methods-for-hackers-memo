@@ -84,6 +84,6 @@ stages:
       - reports/figures/chapter02/two/${item.index}/trace.png
       - data/processed/chapter02/two/${item.index}/
   params_example:
-    params:
-      - sampling_config
-    cmd: echo a
+    foreach: ${sampling_config}
+    do:
+      cmd: echo "${item.index}"
