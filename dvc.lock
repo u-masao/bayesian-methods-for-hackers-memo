@@ -433,9 +433,9 @@ stages:
       models/chapter02/params1/two_bernoulli_theta.npz data/processed/chapter02/two/params1/
       --figure_dir reports/figures/chapter02/two/params1/
     deps:
-    - path: models/chapter02/params1/two_bernoulli.pickle
-      md5: eb82832b157320df1d772a3cb96a4178
-      size: 5750461
+    - path: models/chapter02/params1/two_bernoulli_model.pickle
+      md5: bbd64ceafd057bfd7cea5b722baf63d4
+      size: 5750476
     - path: models/chapter02/params1/two_bernoulli_theta.npz
       md5: f469224b689e5d5f1885077475b726ff
       size: 19546
@@ -451,8 +451,8 @@ stages:
       size: 18387
       nfiles: 2
     - path: reports/figures/chapter02/two/params1/histogram.png
-      md5: 823d2bc61dc44411c662866185d59907
-      size: 160744
+      md5: c784af5e298b9437dec73f8926852837
+      size: 161216
     - path: reports/figures/chapter02/two/params1/trace.png
       md5: 17b6da7120059afc3cbf4fa4a238bdb9
       size: 176253
@@ -479,9 +479,9 @@ stages:
       models/chapter02/params3/two_bernoulli_theta.npz data/processed/chapter02/two/params3/
       --figure_dir reports/figures/chapter02/two/params3/
     deps:
-    - path: models/chapter02/params3/two_bernoulli.pickle
-      md5: e74343e4fa23156c434cb4961a13709b
-      size: 5750465
+    - path: models/chapter02/params3/two_bernoulli_model.pickle
+      md5: e261f4b3663ebce90fd65c905802e11a
+      size: 5750476
     - path: models/chapter02/params3/two_bernoulli_theta.npz
       md5: e4f84b47af1d24059589e6d69a1cc8fa
       size: 19546
@@ -497,8 +497,8 @@ stages:
       size: 18386
       nfiles: 2
     - path: reports/figures/chapter02/two/params3/histogram.png
-      md5: 1f260d158edd3417f5683165a6ce8b09
-      size: 158406
+      md5: cb71dbb8f1bbb7c81943d48673120672
+      size: 160981
     - path: reports/figures/chapter02/two/params3/trace.png
       md5: 833602c6b0b8f6685be7f1485fdcdd3c
       size: 178208
@@ -525,9 +525,9 @@ stages:
       models/chapter02/params2/two_bernoulli_theta.npz data/processed/chapter02/two/params2/
       --figure_dir reports/figures/chapter02/two/params2/
     deps:
-    - path: models/chapter02/params2/two_bernoulli.pickle
-      md5: 9d3a963fe653346174796dfddc0d78ad
-      size: 5750469
+    - path: models/chapter02/params2/two_bernoulli_model.pickle
+      md5: 0da823a1964a8e9f7e7c26f2a01f2c0b
+      size: 5750476
     - path: models/chapter02/params2/two_bernoulli_theta.npz
       md5: 41b72fc7bde60903400da06b8697d221
       size: 19546
@@ -543,8 +543,8 @@ stages:
       size: 18203
       nfiles: 2
     - path: reports/figures/chapter02/two/params2/histogram.png
-      md5: eda955a4a34c10ebc1345dbe92dc9087
-      size: 161082
+      md5: c8e95960f7cfb28671a94e4074d06ed3
+      size: 162360
     - path: reports/figures/chapter02/two/params2/trace.png
       md5: feb9b12125544da2e2b4ff3768e1050d
       size: 178855
@@ -571,9 +571,9 @@ stages:
       models/chapter02/params4/two_bernoulli_theta.npz data/processed/chapter02/two/params4/
       --figure_dir reports/figures/chapter02/two/params4/
     deps:
-    - path: models/chapter02/params4/two_bernoulli.pickle
-      md5: a7268c5c0c0eda6feab91cde85ebd9f8
-      size: 5750471
+    - path: models/chapter02/params4/two_bernoulli_model.pickle
+      md5: d563f3a953dd89532f5832c4f10c9ffa
+      size: 5750476
     - path: models/chapter02/params4/two_bernoulli_theta.npz
       md5: 7d2dc8f81080127e2743140a364eaca8
       size: 19546
@@ -589,8 +589,8 @@ stages:
       size: 18419
       nfiles: 2
     - path: reports/figures/chapter02/two/params4/histogram.png
-      md5: 4c9e3b4d2116492fca0852c47e581535
-      size: 160374
+      md5: fba9c976c9d714b7d119f842cfba0a7e
+      size: 160696
     - path: reports/figures/chapter02/two/params4/trace.png
       md5: 89726a33a452f19d7551df4f6ac38272
       size: 176781
@@ -617,8 +617,8 @@ stages:
       models/chapter02/params0/two_bernoulli_theta.npz data/processed/chapter02/two/params0/
       --figure_dir reports/figures/chapter02/two/params0/
     deps:
-    - path: models/chapter02/params0/two_bernoulli.pickle
-      md5: 706e0ecc7caeedada893b76fac4b03f8
+    - path: models/chapter02/params0/two_bernoulli_model.pickle
+      md5: 6bd0c65df0e91151e6509f90ad96eb1f
       size: 5750476
     - path: models/chapter02/params0/two_bernoulli_theta.npz
       md5: e134673ad7e9254dc98cda7212b7ad2a
@@ -635,8 +635,8 @@ stages:
       size: 18233
       nfiles: 2
     - path: reports/figures/chapter02/two/params0/histogram.png
-      md5: 9ce779fda8d8956b89881bb5da25161d
-      size: 163614
+      md5: 6e3602bd4d6aea6804bc46c1e87b47e1
+      size: 162301
     - path: reports/figures/chapter02/two/params0/trace.png
       md5: db4d0938d2521fcdc38627cf81835c0c
       size: 175712
