@@ -98,16 +98,8 @@ def plot_histogram(p_a_true, p_b_true, trace):
 
 
 @click.command()
-@click.option(
-    "--model_output_filepath",
-    type=click.Path(),
-    default="models/chapter02/two_bernoulli.pickle",
-)
-@click.option(
-    "--theta_filepath",
-    type=click.Path(),
-    default="models/chapter02/two_bernoulli_theta.npz",
-)
+@click.arguments("model_output_filepath", type=click.Path())
+@click.arguments("theta_output_filepath", type=click.Path())
 @click.option("--p_a_true", type=float, default="0.04")
 @click.option("--p_b_true", type=float, default="0.05")
 @click.option("--n_a", type=int, default=1500)
@@ -134,7 +126,7 @@ def main(**kwargs):
     # save model, trace, theta, observed
     save_trace_and_model(trace, model, kwargs["model_output_filepath"])
     np.savez(
-        kwargs["theta_filepath"],
+        kwargs["theta_output_filepath"],
         p_a_true=p_a_true,
         p_b_true=p_b_true,
         n_a=n_a,
