@@ -1,9 +1,17 @@
 chapter02:
   two_bernoulli:
-    params0:
+    params0_1500_750:
       sampling_random_seed: 100
       n_a: 1500
       n_b: 750
+    params0_1500_1500:
+      sampling_random_seed: 100
+      n_a: 1500
+      n_b: 1500
+    params0_3000_3000:
+      sampling_random_seed: 100
+      n_a: 3000
+      n_b: 3000
     params1:
       sampling_random_seed: 101
       n_a: 1500
