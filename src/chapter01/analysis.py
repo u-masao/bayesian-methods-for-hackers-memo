@@ -1,4 +1,5 @@
 import logging
+import os
 import pickle
 from pathlib import Path
 
@@ -160,6 +161,9 @@ def main(**kwargs):
     # trace summary
     with model:
         summary_df = pm.summary(trace)
+        os.makedirs(
+            Path(kwargs["output_summary_filepath"]).parent, exist_ok=True
+        )
         summary_df.to_csv(kwargs["output_summary_filepath"])
         logger.info(f"trace summary: \n{summary_df}")
 
