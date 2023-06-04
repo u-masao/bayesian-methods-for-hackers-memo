@@ -68,7 +68,7 @@ stages:
         data/processed/chapter02/two/${key}/
         --figure_dir reports/figures/chapter02/two/${key}/
       deps:
-      - models/chapter02/${key}/two_bernoulli.pickle
+      - models/chapter02/${key}/two_bernoulli_model.pickle
       - models/chapter02/${key}/two_bernoulli_theta.npz
       - src/chapter02/two_bernoulli_analysis.py
       - src/utils.py
