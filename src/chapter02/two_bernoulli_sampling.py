@@ -10,7 +10,7 @@ import scipy.stats as stats
 from src.utils import save_trace_and_model
 
 
-def sampling(observations_a, observations_b):
+def sampling(observations_a, observations_b, random_seed=1234):
     model = pm.Model()
     with model:
         p_a = pm.Uniform("p_a", 0, 1)
@@ -23,7 +23,9 @@ def sampling(observations_a, observations_b):
             "obs_b", p_b, observed=observations_b
         )
         step = pm.Metropolis()
-        trace = pm.sample(20000, tune=2000, step=step, chains=3)
+        trace = pm.sample(
+            20000, tune=2000, step=step, chains=3, random_seed=random_seed
+        )
         burned_trace = trace
 
     return burned_trace, model
@@ -110,6 +112,7 @@ def plot_histogram(p_a_true, p_b_true, trace):
 @click.option("--p_b_true", type=float, default="0.05")
 @click.option("--n_a", type=int, default=1500)
 @click.option("--n_b", type=int, default=750)
+@click.option("--sampling_random_seed", type=int, default=1234)
 def main(**kwargs):
     # 初期値を設定
     p_a_true = kwargs["p_a_true"]
@@ -122,7 +125,11 @@ def main(**kwargs):
     observations_b = stats.bernoulli.rvs(p_b_true, size=n_b)
 
     # sampling
-    trace, model = sampling(observations_a, observations_b)
+    trace, model = sampling(
+        observations_a,
+        observations_b,
+        random_seed=kwargs["sampling_random_seed"],
+    )
 
     # save model, trace, theta, observed
     save_trace_and_model(trace, model, kwargs["model_output_filepath"])
