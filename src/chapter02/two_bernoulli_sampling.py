@@ -98,8 +98,8 @@ def plot_histogram(p_a_true, p_b_true, trace):
 
 
 @click.command()
-@click.arguments("model_output_filepath", type=click.Path())
-@click.arguments("theta_output_filepath", type=click.Path())
+@click.argument("model_output_filepath", type=click.Path())
+@click.argument("theta_output_filepath", type=click.Path())
 @click.option("--p_a_true", type=float, default="0.04")
 @click.option("--p_b_true", type=float, default="0.05")
 @click.option("--n_a", type=int, default=1500)
