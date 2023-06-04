@@ -85,5 +85,5 @@ stages:
       - data/processed/chapter02/two/${item.index}/
   params_example:
     params:
-      - params.yaml
+      - sampling_config
     cmd: echo a
