@@ -83,3 +83,8 @@ stages:
       - reports/figures/chapter02/two/${item.index}/bernoulli.png
       - reports/figures/chapter02/two/${item.index}/trace.png
       - data/processed/chapter02/two/${item.index}/
+  params_example:
+    foreath: ${myobject}
+    do:
+      cmd: echo ${item.index}
+
