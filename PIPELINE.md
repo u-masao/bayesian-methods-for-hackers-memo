@@ -22,4 +22,5 @@ flowchart TD
 	node13["chap02_two_bernoulli_analysis@4"]
 	node14["chap02_two_bernoulli_sampling@4"]
 	node14-->node13
+	node15["params_example"]
 ```

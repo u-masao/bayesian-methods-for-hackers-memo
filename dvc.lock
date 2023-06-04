@@ -396,3 +396,11 @@ stages:
     - path: reports/figures/chapter02/two/3/trace.png
       md5: 3a42533ed57a8d82962d17b6cd1c59cc
       size: 179695
+  params_example:
+    cmd: echo a
+    params:
+      params.yaml:
+        sampling_config:
+        - index: 1
+        - index: 2
+        - index: 3
