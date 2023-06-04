@@ -323,7 +323,7 @@ def main(**kwargs):
             p_b_true,
             trace,
         ),
-        Path(kwargs["figure_dir"]) / "bernoulli.png",
+        Path(kwargs["figure_dir"]) / "histogram.png",
     )
 
 
