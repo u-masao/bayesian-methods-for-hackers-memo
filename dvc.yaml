@@ -86,6 +86,4 @@ stages:
   params_example:
     params:
       - params.yaml
-    foreath: ${sampling_config}
-    do:
-      cmd: echo a
+    cmd: echo a
