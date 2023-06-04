@@ -86,5 +86,6 @@ stages:
   params_example:
     foreath: ${myobject}
     do:
-      cmd: echo ${item.index}
-
+      cmd: echo ${item.index} > data/interim/${item.index}.txt
+      outs:
+      - data/interim/${item.index}.txt
