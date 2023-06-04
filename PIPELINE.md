@@ -8,21 +8,27 @@ flowchart TD
 	node2-->node3
 	node3-->node1
 	node4["chap02_one_bernoulli"]
-	node5["chap02_two_bernoulli_analysis@params0"]
-	node6["chap02_two_bernoulli_sampling@params0"]
+	node5["chap02_two_bernoulli_analysis@params0_1500_750"]
+	node6["chap02_two_bernoulli_sampling@params0_1500_750"]
 	node6-->node5
-	node7["chap02_two_bernoulli_analysis@params1"]
-	node8["chap02_two_bernoulli_sampling@params1"]
+	node7["chap02_two_bernoulli_analysis@params0_1500_1500"]
+	node8["chap02_two_bernoulli_sampling@params0_1500_1500"]
 	node8-->node7
-	node9["chap02_two_bernoulli_analysis@params2"]
-	node10["chap02_two_bernoulli_sampling@params2"]
+	node9["chap02_two_bernoulli_analysis@params0_3000_3000"]
+	node10["chap02_two_bernoulli_sampling@params0_3000_3000"]
 	node10-->node9
-	node11["chap02_two_bernoulli_analysis@params3"]
-	node12["chap02_two_bernoulli_sampling@params3"]
+	node11["chap02_two_bernoulli_analysis@params1"]
+	node12["chap02_two_bernoulli_sampling@params1"]
 	node12-->node11
-	node13["chap02_two_bernoulli_analysis@params4"]
-	node14["chap02_two_bernoulli_sampling@params4"]
+	node13["chap02_two_bernoulli_analysis@params2"]
+	node14["chap02_two_bernoulli_sampling@params2"]
 	node14-->node13
+	node15["chap02_two_bernoulli_analysis@params3"]
+	node16["chap02_two_bernoulli_sampling@params3"]
+	node16-->node15
+	node17["chap02_two_bernoulli_analysis@params4"]
+	node18["chap02_two_bernoulli_sampling@params4"]
+	node18-->node17
 ```
 ## detail
 ```mermaid
@@ -36,60 +42,82 @@ flowchart TD
 	node3-->node1
 	node3-->node2
 	node3-->node4
-	node5["data/processed/chapter02/two/params0"]
-	node6["models/chapter02/params0/two_bernoulli_model.pickle"]
-	node7["models/chapter02/params0/two_bernoulli_theta.npz"]
-	node8["reports/figures/chapter02/two/params0/histogram.png"]
-	node9["reports/figures/chapter02/two/params0/trace.png"]
+	node5["data/processed/chapter02/two/params0_1500_750"]
+	node6["models/chapter02/params0_1500_750/two_bernoulli_model.pickle"]
+	node7["models/chapter02/params0_1500_750/two_bernoulli_theta.npz"]
+	node8["reports/figures/chapter02/two/params0_1500_750/histogram.png"]
+	node9["reports/figures/chapter02/two/params0_1500_750/trace.png"]
 	node6-->node5
 	node6-->node8
 	node6-->node9
 	node7-->node5
 	node7-->node8
 	node7-->node9
-	node10["data/processed/chapter02/two/params1"]
-	node11["models/chapter02/params1/two_bernoulli_model.pickle"]
-	node12["models/chapter02/params1/two_bernoulli_theta.npz"]
-	node13["reports/figures/chapter02/two/params1/histogram.png"]
-	node14["reports/figures/chapter02/two/params1/trace.png"]
+	node10["data/processed/chapter02/two/params0_1500_1500"]
+	node11["models/chapter02/params0_1500_1500/two_bernoulli_model.pickle"]
+	node12["models/chapter02/params0_1500_1500/two_bernoulli_theta.npz"]
+	node13["reports/figures/chapter02/two/params0_1500_1500/histogram.png"]
+	node14["reports/figures/chapter02/two/params0_1500_1500/trace.png"]
 	node11-->node10
 	node11-->node13
 	node11-->node14
 	node12-->node10
 	node12-->node13
 	node12-->node14
-	node15["data/processed/chapter02/two/params2"]
-	node16["models/chapter02/params2/two_bernoulli_model.pickle"]
-	node17["models/chapter02/params2/two_bernoulli_theta.npz"]
-	node18["reports/figures/chapter02/two/params2/histogram.png"]
-	node19["reports/figures/chapter02/two/params2/trace.png"]
+	node15["data/processed/chapter02/two/params0_3000_3000"]
+	node16["models/chapter02/params0_3000_3000/two_bernoulli_model.pickle"]
+	node17["models/chapter02/params0_3000_3000/two_bernoulli_theta.npz"]
+	node18["reports/figures/chapter02/two/params0_3000_3000/histogram.png"]
+	node19["reports/figures/chapter02/two/params0_3000_3000/trace.png"]
 	node16-->node15
 	node16-->node18
 	node16-->node19
 	node17-->node15
 	node17-->node18
 	node17-->node19
-	node20["data/processed/chapter02/two/params3"]
-	node21["models/chapter02/params3/two_bernoulli_model.pickle"]
-	node22["models/chapter02/params3/two_bernoulli_theta.npz"]
-	node23["reports/figures/chapter02/two/params3/histogram.png"]
-	node24["reports/figures/chapter02/two/params3/trace.png"]
+	node20["data/processed/chapter02/two/params1"]
+	node21["models/chapter02/params1/two_bernoulli_model.pickle"]
+	node22["models/chapter02/params1/two_bernoulli_theta.npz"]
+	node23["reports/figures/chapter02/two/params1/histogram.png"]
+	node24["reports/figures/chapter02/two/params1/trace.png"]
 	node21-->node20
 	node21-->node23
 	node21-->node24
 	node22-->node20
 	node22-->node23
 	node22-->node24
-	node25["data/processed/chapter02/two/params4"]
-	node26["models/chapter02/params4/two_bernoulli_model.pickle"]
-	node27["models/chapter02/params4/two_bernoulli_theta.npz"]
-	node28["reports/figures/chapter02/two/params4/histogram.png"]
-	node29["reports/figures/chapter02/two/params4/trace.png"]
+	node25["data/processed/chapter02/two/params2"]
+	node26["models/chapter02/params2/two_bernoulli_model.pickle"]
+	node27["models/chapter02/params2/two_bernoulli_theta.npz"]
+	node28["reports/figures/chapter02/two/params2/histogram.png"]
+	node29["reports/figures/chapter02/two/params2/trace.png"]
 	node26-->node25
 	node26-->node28
 	node26-->node29
 	node27-->node25
 	node27-->node28
 	node27-->node29
-	node30["reports/figures/chapter02/one/bernoulli.png"]
+	node30["data/processed/chapter02/two/params3"]
+	node31["models/chapter02/params3/two_bernoulli_model.pickle"]
+	node32["models/chapter02/params3/two_bernoulli_theta.npz"]
+	node33["reports/figures/chapter02/two/params3/histogram.png"]
+	node34["reports/figures/chapter02/two/params3/trace.png"]
+	node31-->node30
+	node31-->node33
+	node31-->node34
+	node32-->node30
+	node32-->node33
+	node32-->node34
+	node35["data/processed/chapter02/two/params4"]
+	node36["models/chapter02/params4/two_bernoulli_model.pickle"]
+	node37["models/chapter02/params4/two_bernoulli_theta.npz"]
+	node38["reports/figures/chapter02/two/params4/histogram.png"]
+	node39["reports/figures/chapter02/two/params4/trace.png"]
+	node36-->node35
+	node36-->node38
+	node36-->node39
+	node37-->node35
+	node37-->node38
+	node37-->node39
+	node40["reports/figures/chapter02/one/bernoulli.png"]
 ```
