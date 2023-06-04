@@ -1,3 +1,4 @@
+## summary
 ```mermaid
 flowchart TD
 	node1["chap01_analysis"]
@@ -22,4 +23,58 @@ flowchart TD
 	node13["chap02_two_bernoulli_analysis@params4"]
 	node14["chap02_two_bernoulli_sampling@params4"]
 	node14-->node13
+```
+## detail
+```mermaid
+flowchart TD
+	node1["data/interim/trace_and_model.pickle"]
+	node2["data/processed/chapter01/trace_summary.csv"]
+	node3["data/raw/dataset.csv"]
+	node4["reports/figures/chapter01"]
+	node1-->node2
+	node1-->node4
+	node3-->node1
+	node3-->node2
+	node3-->node4
+	node5["data/processed/chapter02/two/params0"]
+	node6["models/chapter02/params0/two_bernoulli_theta.npz"]
+	node7["reports/figures/chapter02/two/params0/histogram.png"]
+	node8["reports/figures/chapter02/two/params0/trace.png"]
+	node6-->node5
+	node6-->node7
+	node6-->node8
+	node9["data/processed/chapter02/two/params1"]
+	node10["models/chapter02/params1/two_bernoulli_theta.npz"]
+	node11["reports/figures/chapter02/two/params1/histogram.png"]
+	node12["reports/figures/chapter02/two/params1/trace.png"]
+	node10-->node9
+	node10-->node11
+	node10-->node12
+	node13["data/processed/chapter02/two/params2"]
+	node14["models/chapter02/params2/two_bernoulli_theta.npz"]
+	node15["reports/figures/chapter02/two/params2/histogram.png"]
+	node16["reports/figures/chapter02/two/params2/trace.png"]
+	node14-->node13
+	node14-->node15
+	node14-->node16
+	node17["data/processed/chapter02/two/params3"]
+	node18["models/chapter02/params3/two_bernoulli_theta.npz"]
+	node19["reports/figures/chapter02/two/params3/histogram.png"]
+	node20["reports/figures/chapter02/two/params3/trace.png"]
+	node18-->node17
+	node18-->node19
+	node18-->node20
+	node21["data/processed/chapter02/two/params4"]
+	node22["models/chapter02/params4/two_bernoulli_theta.npz"]
+	node23["reports/figures/chapter02/two/params4/histogram.png"]
+	node24["reports/figures/chapter02/two/params4/trace.png"]
+	node22-->node21
+	node22-->node23
+	node22-->node24
+	node25["reports/figures/chapter02/one/bernoulli.png"]
+	node26["models/chapter02/params0/two_bernoulli_model.pickle"]
+	node27["models/chapter02/params1/two_bernoulli_model.pickle"]
+	node28["models/chapter02/params2/two_bernoulli_model.pickle"]
+	node29["models/chapter02/params3/two_bernoulli_model.pickle"]
+	node30["models/chapter02/params4/two_bernoulli_model.pickle"]
 ```
