@@ -1,4 +1,12 @@
-sampling_config:
-  - index: 1 
-  - index: 2
-  - index: 3
+chapter02:
+  two_bernoulli:
+    params0:
+      sampling_random_seed: 100
+    params1:
+      sampling_random_seed: 101
+    params2:
+      sampling_random_seed: 102
+    params3:
+      sampling_random_seed: 103
+    params4:
+      sampling_random_seed: 104
